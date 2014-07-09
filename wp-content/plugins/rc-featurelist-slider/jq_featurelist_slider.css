@@ -1,0 +1,135 @@
+div#slider_wrapper {
+	background: url('images/layout/content_home_bg.png') top center repeat-y;
+}
+
+#featurelist-slider {
+	background: url('js/jquery.featurelist/img/slider_bg.png') center left no-repeat;
+	margin: 0 auto;
+	height:280px;
+	/*overflow: hidden;*/
+	
+	/*border-left:solid 2px #c3c3c3;
+	border-right:solid 2px #c3c3c3;*/
+}
+			
+div#feature_list .title {
+	display: block;
+	margin: 0;	
+	padding: 0;
+	font-size: 16px;
+	font-weight: bold;
+	color: #fcde55;
+	line-height: normal;
+}
+			
+div#feature_list .tabs a span {
+	line-height: 12px;
+}
+			
+div#feature_list .current .title {
+	color: #ffffff;
+}
+
+div#feature_list {
+	width: 946px;
+	height: 282px;
+	/*overflow: hidden;*/
+	position: relative;
+	color:#ffffff;
+	margin-top: 0;
+}
+
+div#feature_list ul {
+	position: absolute;
+	top: 0;
+	list-style: none;	
+	padding: 0;
+	margin: 0;
+}
+
+div#feature_list ul#tabs {
+	left: 0;
+	z-index: 2;
+	width: 218px;
+	height: 282px;
+}
+
+div#feature_list ul#tabs li {
+	font-size: 12px;
+	font-family: Arial;
+	margin-left: 0;
+	height: 92px;
+	margin-bottom: 1px;
+}
+
+div#feature_list ul#tabs li a {
+	color: #222;
+	text-decoration: none;	
+	display: block;
+	padding: 8px 40px 8px 13px;
+	height: 75px;
+	outline: none;
+	color:#ffffff;
+	
+}
+
+div#feature_list ul#tabs li a:hover {
+	background:  url("js/jquery.featurelist/img/slider_tab_hl.png") left top no-repeat;
+	color: #FFF;
+}
+
+div#feature_list ul#tabs li a:hover .title {
+	color: #FFF;
+}
+
+div#feature_list ul#tabs li a.current {
+	background:  url("js/jquery.featurelist/img/slider_tab_hl.png") left top no-repeat;
+	color: #FFF;
+}
+
+div#feature_list ul#tabs li a.current:hover {
+	text-decoration: none;
+	cursor: default;
+}
+
+div#feature_list ul#output img {
+	width: 760px;
+	height: 280px;
+}
+
+div#feature_list ul#output {
+	right: 0;
+	width: 760px;
+	height: 280px;
+	position: relative;
+	float:right;
+}
+
+div#feature_list ul#output li {
+	position: absolute;
+	width: 760px;
+	height: 280px;
+	margin-left: 0;
+	background: 
+}
+
+div#feature_list ul#output li span.caption{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	display: block;
+	background: url('js/jquery.featurelist/img/caption-bg.png') top left;
+	height: 35px;
+	line-height: 35px;
+	padding-left: 35px;
+}
+
+div#feature_list ul#output li a.button-c2a-l {
+	line-height: 22px;
+	width: 263px;
+	position:absolute;
+	bottom: -16px;
+	right: -16px;
+	
+}

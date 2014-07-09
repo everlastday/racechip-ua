@@ -1,0 +1,6 @@
+body.error404 div#content {background: transparent url('images/404_bg.png') center top no-repeat;min-height: 619px;min-height:619px;height:auto !important;  /* für moderne Browser */ height:619px;  /*für den IE */}
+body.error404 div#content div.error404{ont-family: 'verdana', sans-serif;position: relative;}
+body.error404 div#content h1.entry-title,body.error404 div#content div.entry-content h2 {margin: 0 15px 20px 0;line-height: 150%;font-size: 13pt;font-weight: bold;color: #eaebec;}
+body.error404 div#content h1.entry-title {position: absolute;top: 48px;left: 530px;width: 401px;}
+body.error404 div#content div.entry-content {position: absolute;top: 260px;left: 610px;width: 336px;padding: 0;}
+body.error404 div#content div.entry-content ul{font-size: 10pt;line-height: 150%;}

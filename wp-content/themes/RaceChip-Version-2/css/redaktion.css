@@ -1,0 +1,22 @@
+/**CSS Klassen für Frontend - Redaktion**/
+.cntBox01 {background:#3B3F45;padding:20px 20px 5px 20px;margin-bottom:20px }
+.cntBox02 {background:#3B3F45;margin-left:-15px; margin-bottom:10px; padding-left:20px; padding-right:20px; padding-top:5px; padding-bottom:2px}
+.cntBox-img {background-color:#3B3F45; margin-bottom:20px; padding-bottom:5px;}
+.backOne { background:#3B3F45;}
+.mb20 {margin-bottom:20px}
+.mb10 {margin-bottom:10px}
+.ml-15 {margin-left:-15px}
+.mt20{margin-top:20px}
+.mt10{margin-top:10px}
+.mr20{margin-right:20px}
+.ml20{margin-left:20px}
+.pb20{padding-bottom:20px}
+.pt20{padding-top:20px}
+.pb1{padding-bottom:1px}
+.pt15 {padding-top:15px}
+.pr20{padding-right:20px}
+.pl20{padding-left:20px}
+.pb5{padding-bottom:5px}
+.td-border{border:1px solid #3b3f45; padding:8px;}
+.td-border2{border:1px solid #3b3f45; padding:8px; background-color:#2d3036;}
+.th-background{padding:8px; background-color:#3b3f45; border:1px solid #3b3f45;}

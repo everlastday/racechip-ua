@@ -1,0 +1,4 @@
+[11-Nov-2013 11:32:03 America/Denver] PHP Notice:  Undefined variable: subject_call in /home2/racechip/public_html/wp-content/plugins/rcclient/rcvalidate.php on line 142
+[11-Jun-2014 02:57:59 America/Denver] PHP Fatal error:  Call to undefined function get_bloginfo() in /home2/racechip/public_html/wp-content/plugins/rcclient/rcvalidate.php on line 95
+[11-Jun-2014 02:59:14 America/Denver] PHP Fatal error:  Call to undefined function get_bloginfo() in /home2/racechip/public_html/wp-content/plugins/rcclient/rcvalidate.php on line 98
+[11-Jun-2014 03:00:16 America/Denver] PHP Fatal error:  Call to undefined function get_bloginfo() in /home2/racechip/public_html/wp-content/plugins/rcclient/rcvalidate.php on line 98
