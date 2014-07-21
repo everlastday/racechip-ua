@@ -91,6 +91,8 @@
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-pro2/">RaceChip Pro2</a></li>
           <li id="menu-item-2630" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2630"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-ultimate/">RaceChip Ultimate</a></li>
+          <li id="menu-item-26302" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26302"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol-2/">Response Control</a></li>
           <li id="menu-item-2626" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2626"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/kn-air-filter/">Возд. фильтры K&ampN</a></li>
           <li id="menu-item-2624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2624"><a
@@ -107,7 +109,7 @@
             <td><![endif]-->
         <div class="listHolder">
           <div class="top">
-            <span class="title">Пожалуйстsа, выберите производителя Вашего автомобиля из списка.</span>
+            <span class="title">Пожалуйста, выберите производителя Вашего автомобиля из списка.</span>
           </div>
           <?php
             $data_from_db = get_chiptuning();

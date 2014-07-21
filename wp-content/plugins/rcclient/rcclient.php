@@ -249,3 +249,104 @@ function get_models($car_brend = 'null', $return_id = 0) {
     <?php
   }
 
+
+
+ // response controll
+
+function get_response( $car_id = null, $car_name = null ) {
+
+    if( ! empty( $car_id ) && ! empty( $car_name ) ) {
+        $sql = 'SELECT
+      racechips.box_class,
+      racechips.box_name,
+      racechips.box_qty,
+      racechips.power,
+      racechips.torque,
+      models.name,
+      models.engine
+      FROM racechips
+      LEFT JOIN models ON racechips.model_id=models.id
+
+      WHERE racechips.model_id=' . (int) $car_name;
+
+        //d($sql);
+        $result = DatabaseHandler::GetAll($sql);
+        return $result;
+    }
+    elseif(! empty( $car_id ) ) {
+        $sql = 'SELECT id,name FROM response_models WHERE vehicle_id=' . (int) $car_id;
+        $result = DatabaseHandler::GetAll($sql);
+        return $result;
+    }
+    else {
+        $sql = 'SELECT id, name FROM response_vehicles';
+        $result = DatabaseHandler::GetAll($sql);
+        return $result;
+    }
+
+
+}
+
+function get_response_data( $data = array()) {
+    if(isset($data['vehicle_id']) and isset($data['model_id']) and !empty($data['vehicle_id']) and !empty($data['model_id'])) {
+        $where = ' WHERE response_general.model_id=' . (int) $data['model_id'] . ' AND response_general.vehicle_id=' . (int) $data['vehicle_id'];
+    }
+    elseif(isset($data['id']) and !empty($data['id'])) {
+        $where = ' WHERE response_general.id=' . (int) $data['id'];
+
+    }
+    else {
+        return 0;
+    }
+
+    $sql = 'SELECT response_general.id,
+                   response_general.vehicle_id,
+                   response_general.model_id,
+                   response_general.engine,
+                   response_general.dispacement,
+                   response_general.zylinder,
+                   response_general.power,
+                   response_general.ps,
+                   response_general.swcode,
+                   response_general.kabel,
+                   response_vehicles.name as vehicle_name,
+                   response_models.name as model_name
+                    FROM `response_general`
+        LEFT JOIN response_vehicles ON response_vehicles.id=response_general.vehicle_id
+        LEFT JOIN response_models ON response_models.id=response_general.model_id'
+        . $where . ';';
+
+    $result = DatabaseHandler::GetAll($sql);
+    return $result;
+
+}
+
+
+
+function get_response_models($car_brend = 'null', $return_id = 0) {
+    $model_brends = get_response();
+
+    foreach($model_brends as $k => $v) {
+
+        //$v['name'] = str_replace(' ', '-', $v['name']);
+
+        $model_brend[strtolower($v['name'])] = $v['id'];
+    }
+
+    if(isset($model_brend[$car_brend])) {
+
+        if($return_id > 0) {
+            return intval($model_brend[$car_brend]);
+        }
+
+        $model = $model_brend[$car_brend];
+        return get_response( $model );
+
+    } else {
+        return array();
+    }
+}
+
+
+
+
