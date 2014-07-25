@@ -108,37 +108,26 @@
           <tr>
             <td><![endif]-->
         <div class="listHolder">
-          <div class="top">
-            <span class="title">Пожалуйста, выберите производителя Вашего автомобиля из списка.</span>
-          </div>
-          <?php
-            $data_from_db = get_chiptuning();
-            $models_count = count_vehicles();
-            $cnt = 0;
-
-            foreach ( $data_from_db as $k => $v ):
-              if ( $cnt == 0 ) :
-                ?>
-                <div class="listCol">
-                <ul>
-              <?php
-              endif;
-              $cnt ++;
-              $href_name = preg_replace("/ /", "-", $v['name']);
-              ?>
-              <li><a class="" href="<?php echo get_bloginfo('wpurl') . "/chiptuning/" . strtolower($href_name) ?>"><?php echo $v['name'] ?></a></li>
-              <?php
-              if ( $cnt == ceil($models_count/6) ) : ?>
-                </ul>
-                </div>
-                <?php
-                $cnt = 0;
-              endif;
-            endforeach;
-          ?>
-          <div class="bottom"></div>
+        <ul id="menu-chiptuning">
+            <li>
+               <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/" style="background: none;">
+                   <div id="button1">
+                       <h2>Chiptuning</h2>
+                       <img src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/menu/chiptuning-icon.png" />
+                   </div>
+               </a>
+            </li>
+            <li>
+                <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/">
+                    <div id="button2">
+                        <h2>Response Control</h2>
+                        <img src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/menu/response-icon.png" />
+                    </div>
+                </a>
+            </li>
+        </ul>
         </div>
-        <!--[if lte IE 6]></td></tr></table></a><![endif]-->
+
       </li>
       <li id="menu-item-2525" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2525"><a
           href="#">О RaceChip</a>
