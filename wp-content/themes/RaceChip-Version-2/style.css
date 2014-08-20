@@ -1681,3 +1681,14 @@ div.HgSchraeg:before  { width: 0;  content: '';  position: absolute;  top: 0;  r
     text-decoration: none;
     color:#00B4FF;
 }
+
+#jivosite-adword,
+#jivo-label-copyright {
+    display: none !important;
+}
+
+#jivosite-adword .content {
+    background: none !important;
+    display: none !important;
+}
+
