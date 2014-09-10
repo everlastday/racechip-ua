@@ -1,4 +1,8 @@
 jQuery(document).ready(function($){
+
+    var wnd_popup = $('.window_popup');
+
+
     $(".sections").fadeIn('slow');
 
 	$(".freecall-btn").formSlide({
@@ -15,15 +19,19 @@ jQuery(document).ready(function($){
 
 
 
+
+
+
     $("#free-call input[name*=phone]").mask("38 (999) 999-99-99");
     $("#free-call form").validate({
         errorElement: '',
         submitHandler: function(form) {
-            
+            wnd_popup.hide();
+
             $(form).ajaxSubmit({
                 success: function(responseText, statusText, xhr, $form) {
                     var obj = jQuery.parseJSON(responseText);
-                    console.log(obj);
+
                     if(obj.result.type !== undefined && obj.result.type == 'success') {
                         //$("#free-call form").prepend('<div class="success">' + obj.result.text + '</div>');
                         //$(form).find('input[type=text], textarea').val('');
@@ -31,6 +39,7 @@ jQuery(document).ready(function($){
                             $(form).find('input[type=text], textarea').val('');
                             window.location = obj.result.url + "/request-a-call/";
                         } else {
+                            wnd_popup.show();
                             $("#online-message form").prepend('<div class="success">' + obj.result.text + '</div>');
                             $(form).find('input[type=text], textarea').val('');
                         }
@@ -66,22 +75,28 @@ jQuery(document).ready(function($){
 
     $("#online-message input[name*=phone]").mask("38 (999) 999-99-99");
     $("#online-message form").validate({
+
         errorElement: '',
         submitHandler: function(form) {
-            
+
+
+            wnd_popup.hide();
             $(form).ajaxSubmit({
                 success: function(responseText, statusText, xhr, $form) {
                     var obj = jQuery.parseJSON(responseText);
                     console.log(obj);
                     if(obj.result.type !== undefined && obj.result.type == 'success') {
                         if(obj.result.error !== true) {
+
                             $(form).find('input[type=text], textarea').val('');
                             window.location = obj.result.url + "/thankyou";
                         } else {
+                            wnd_popup.show();
                             $("#online-message form").prepend('<div class="success">' + obj.result.text + '</div>');
                             $(form).find('input[type=text], textarea').val('');
                         }
                     } else {
+                        wnd_popup.show();
                         alert(obj.result.text);
                     }
                        

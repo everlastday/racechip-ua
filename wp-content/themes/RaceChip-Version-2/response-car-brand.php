@@ -22,7 +22,7 @@
                 foreach ($all_data_r as $key => $value):
 
                   if (isset($all_data[$key]) && is_numeric($key)):
-                    $value = strtolower(trim($value));
+                    $value = urlencode(strtolower(trim($value)));
                     $all_data[$key] = trim($all_data[$key]);
                   ?>
 

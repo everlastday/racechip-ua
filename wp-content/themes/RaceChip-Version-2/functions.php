@@ -766,9 +766,9 @@ add_action('wp_enqueue_scripts', function(){
 });
 
 
-//  add_action('init', 'rewrite_rules');
-//  function rewrite_rules(){
-//
+  add_action('init', 'rewrite_rules');
+  function rewrite_rules(){
+
 //    add_rewrite_rule('^chiptuning/([a-z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]','top');
 //    add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]','top');
 //    add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]','top');
@@ -776,41 +776,64 @@ add_action('wp_enqueue_scripts', function(){
 //    add_rewrite_rule('^responsecontrol/([a-z0-9-]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]','top');
 //    add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]','top');
 //    add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]&response_name=$matches[3]','top');
-//
-//
-//
-//    flush_rewrite_rules(true);
-//
-//  }
-
-add_action( 'init','maybe_rewrite_rules' );
-
-function maybe_rewrite_rules() {
-
-    $ver = filemtime( __FILE__ ); // Get the file time for this file as the version number
-    $defaults = array( 'version' => 0, 'time' => time() );
-    $r = wp_parse_args( get_option( __CLASS__ . '_flush', array() ), $defaults );
-
-    if ( $r['version'] != $ver || $r['time'] + 172800 < time() ) { // Flush if ver changes or if 48hrs has passed.
 
 
-        add_rewrite_rule('^chiptuning/([a-z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]','top');
-        add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]','top');
-        add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]','top');
 
-        add_rewrite_rule('^responsecontrol/([a-z0-9-+]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]','top');
-        add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-+]+)/([a-zA-Z0-9-+%]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]','top');
-        add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-+]+)/([a-zA-Z0-9-+%]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]&response_name=$matches[3]','top');
+    flush_rewrite_rules(true);
+
+  }
 
 
-        flush_rewrite_rules(true);
-        // trace( 'flushed' );
-        $args = array( 'version' => $ver, 'time' => time() );
-        if ( ! update_option( __CLASS__ . '_flush', $args ) )
-            add_option( __CLASS__ . '_flush', $args );
-    }
 
+
+
+
+function feed_dir_rewrite( $wp_rewrite ) {
+    $feed_rules = array(
+        '^chiptuning/([a-z0-9-]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]',
+        '^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]',
+        '^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]',
+        '^responsecontrol/([a-z0-9%-\+]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]',
+        '^responsecontrol/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-%\+]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]',
+        '^responsecontrol/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-_\.\,\+()%]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]&response_name=$matches[3]',
+    );
+
+    $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
+    return $wp_rewrite->rules;
 }
+
+// Hook in.
+add_filter( 'generate_rewrite_rules', 'feed_dir_rewrite' );
+
+
+//add_action( 'init','maybe_rewrite_rules' );
+//
+//function maybe_rewrite_rules() {
+//
+//    $ver = filemtime( __FILE__ ); // Get the file time for this file as the version number
+//    $defaults = array( 'version' => 0, 'time' => time() );
+//    $r = wp_parse_args( get_option( __CLASS__ . '_flush', array() ), $defaults );
+//
+//    if ( $r['version'] != $ver || $r['time'] + 172800 < time() ) { // Flush if ver changes or if 48hrs has passed.
+//
+//
+//        add_rewrite_rule('^chiptuning/([a-z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]','top');
+//        add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]','top');
+//        add_rewrite_rule('^chiptuning/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]','top');
+//
+//        add_rewrite_rule('^responsecontrol/([a-z0-9-+]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]','top');
+//        add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-+]+)/([a-zA-Z0-9-+%]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]','top');
+//        add_rewrite_rule('^responsecontrol/([a-zA-Z0-9-+]+)/([a-zA-Z0-9-+%]+)/([a-zA-Z0-9-_\.\,\+()]+)/?$','index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]&response_name=$matches[3]','top');
+//
+//
+//        flush_rewrite_rules(true);
+//        // trace( 'flushed' );
+//        $args = array( 'version' => $ver, 'time' => time() );
+//        if ( ! update_option( __CLASS__ . '_flush', $args ) )
+//            add_option( __CLASS__ . '_flush', $args );
+//    }
+//
+//}
 
 
 

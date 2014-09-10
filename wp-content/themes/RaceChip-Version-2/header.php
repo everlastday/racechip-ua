@@ -10,6 +10,25 @@
  */
 ?>
 <!DOCTYPE html>
+<?php
+/*
+ * Переключение на мобильную версию
+ * mobile = 1 - переключение на полную версию сайта
+ * mobile = 2 -  удаление куки полной версии и переключение на моб. версию сайта
+ * Если параметр mobile не существует и не установлены куки на полную версию сайта - загрузиться моб. версия с помощю ф-ции
+ * is_handheld() которая определяет моб. устройство (плагин mobble )
+ */
+
+if(isset($_GET['mobile']) and $_GET['mobile'] == 1) setcookie('r_full_version', 1, strtotime('+7 day'));
+if(isset($_GET['mobile']) and $_GET['mobile'] == 2) {
+    setcookie('r_full_version', null, strtotime('-7 day'));
+    wp_redirect( 'http://racechip.com.ua', 301 );
+}
+if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) {
+    wp_redirect( 'http://m.racechip.com.ua', 301 );
+    exit;
+}
+ ?>
 <!-- Розмітка мікроданих, додана Майстром розмітки структурованих даних Google. -->
 <html <?php language_attributes(); ?>>
 <head>
@@ -26,7 +45,7 @@
     <span class="limg"><img alt="ua" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/ua.png"></span> <span class="lname"> Ukraine</span>
     <div class="ldropdown">
       <ul id="language_chooser">
-        <li><a title="Deutsch" href="http://racechip.de"><img alt="de" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/de.png"> Deutsch</a></li>
+        <li><a title="Deutsch" href="http://racechip.de"><img alt="de" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/de.png">Deutsch</a></li>
         <li><a title="Russia" href="http://racechip-ru.com"><img alt="ru" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/ru.png"> Russia</a></li>
         <li><a title="Español" href="http://www.racechip.es"><img alt="es_ES" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/es.png"> Español</a></li>
         <li><a title="Français" href="http://www.racechip.fr"><img alt="fr_FR" src="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/themes/RaceChip-Version-2/images/flags/fr.png"> Français</a></li>

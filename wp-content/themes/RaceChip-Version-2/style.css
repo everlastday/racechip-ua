@@ -333,7 +333,7 @@ body.page .entry-title { display: none; }
 ul.models_list {margin:0!important;padding:0!important;}
 ul.manufacturers_list {margin:0!important;padding:0!important;}
 ul.manufacturers_list li {margin:10px 1px; display: inline-block;}
-.manufacturers_list a.list_item {background-color: #383D45; display: inline-block; margin-right: 4px; padding: 5px; white-space: nowrap; width: 166px; height: 40px; }
+.manufacturers_list a.list_item {background-color: #383D45; display: inline-block; margin-right: 3px; padding: 5px; white-space: nowrap; width: 166px; height: 40px; }
 .manufacturers_list a.list_item:hover {background: #1481af; /* Old browsers */
 background: -moz-linear-gradient(top, #1aa2dc 0%, #1481af 100%);/* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1aa2dc),color-stop(100%, #1481af) ); /* Chrome,Safari4+ */

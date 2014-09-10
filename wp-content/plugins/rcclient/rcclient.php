@@ -184,7 +184,7 @@ function get_models($car_brend = 'null', $return_id = 0) {
 
     <div class="window_popup" id="online-message">
       <div class="x"></div>
-      <form method="post" action="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/plugins/rcclient/rcvalidate.php">
+      <form class="popup_form" method="post" action="<?php echo get_bloginfo( 'wpurl' ); ?>/wp-content/plugins/rcclient/rcvalidate.php">
         <input type="text" class="required" placeholder="Имя" name="name" />
         <input type="text" class="required" placeholder="E-mail" name="email" />
         <input type="text" class="required" placeholder="Номер телефона" name="phone" />

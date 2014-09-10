@@ -203,11 +203,14 @@
 
 //              }
     } elseif ( ! empty( $wp_query->query_vars[ 'car_id' ] ) ) {
+
+
+
       //;
-      if ( preg_match( "/^([a-z-]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
+      if ( preg_match( "/^([a-z-%]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
 
         //$model        = (int) $ok[ 2 ];
-        $car_brend = $ok[ 1 ];
+        $car_brend = urldecode($ok[ 1 ]);
 
 
         $data_from_db = get_models( $car_brend );
