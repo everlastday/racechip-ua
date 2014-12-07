@@ -79,16 +79,16 @@ form#post #normal-sortables{
 .un-admin-section-last{
 	border-bottom: none;
 }
-#un-feedback-reply form{
+#un-feedback-replys form{
 	padding-top: 15px !important;
 }
-#un-feedback-reply label{
+#un-feedback-replys label{
 	display: block;
 	font-weight: bold;
 	margin-bottom: 5px;
 	color: #464646;
 }
-#un-feedback-reply textarea, #un-feedback-reply input[type=text]{
+#un-feedback-replys textarea, #un-feedback-replys input[type=text]{
 	width: 100%;
 	display: block;
 	margin-bottom: 7px;

@@ -151,7 +151,7 @@ function get_models($car_brend = 'null', $return_id = 0) {
 
   foreach($model_brends as $k => $v) {
 
-    $v['name'] = str_replace(' ', '-', $v['name']);
+    //$v['name'] = str_replace(' ', '-', $v['name']);
 
     $model_brend[strtolower($v['name'])] = $v['id'];
   }

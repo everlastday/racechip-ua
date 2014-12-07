@@ -20,12 +20,35 @@ class UN_Admin_Editor_Page{
 			FEEDBACK, 'side', 'default');
 		$title = un_get_feedback_type_span($post->ID);
 
-		add_meta_box('un-feedback-body', 
-			$title . ($title ? ": " : '') . esc_html($post->post_title), 
+		add_meta_box('un-feedback-body0001',
+			$title . ($title ? ": " : '') . esc_html($post->post_title),
 			array(&$this, 'description_meta_box'),
-			FEEDBACK);
+			FEEDBACK, 'advanced', 'high');
+
+		if(get_post_meta($post->ID, 'u_reply_message', true) != '') {
+
+			$reply_message_from_db = get_post_meta($post->ID, 'u_reply_message', true);
+//			echo "<pre>";
+//			print_r($reply_message_from_db);
+//			echo "</pre>";
+			foreach ( $reply_message_from_db as $k => $v) {
+
+//				add_meta_box('un-feedback-body',
+//					esc_html($reply_message_from_db[$k]['subject']),
+//					array(&$this, 'answer_reply_meta_box'),
+//					FEEDBACK);
+				add_meta_box('un-feedback-body' .$k,
+					'Ответ №' . ($k + 1),
+					array(&$this, 'answer_reply_meta_box'),
+					FEEDBACK, 'advanced', 'default',$reply_message_from_db[$k] );
+
+			}
+
+
+		}
+
 		if (get_post_meta($post->ID, '_email', true) || get_post_meta($post->ID, '_author', true)){
-			add_meta_box('un-feedback-reply', __('Reply'), array(&$this, 'reply_meta_box'), FEEDBACK);
+			add_meta_box('un-feedback-replys', __('Reply'), array(&$this, 'reply_meta_box'), FEEDBACK, 'advanced', 'low');
 		}
 	}
 	
@@ -60,6 +83,27 @@ class UN_Admin_Editor_Page{
 		wp_mail($email, stripslashes($_REQUEST['subject']), stripslashes($_REQUEST['message']),
 			'Content-type: text/html');
 		_e('Email sent successfully.', 'usernoise');
+
+		if(get_post_meta($id, 'u_reply_message', true) != '')
+			$reply_message_from_db = get_post_meta($id, 'u_reply_message', true);
+
+		else
+			$reply_message_from_db = array();
+
+
+		$reply_message_data = Array(
+			'subject' => $_REQUEST['subject'],
+			      'message' => stripslashes($_REQUEST['message']),
+			      'time' => time()
+		);
+
+
+
+		array_push($reply_message_from_db, $reply_message_data);
+
+
+		update_post_meta($id, 'u_reply_message', $reply_message_from_db );
+		//header('Location:'.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
 		exit;
 	}
 	
@@ -95,6 +139,28 @@ class UN_Admin_Editor_Page{
 		echo '</div>';
 		do_action('description_meta_box_bottom', $post);
 	}
+
+
+	public function answer_reply_meta_box($post, $messages_reply_info){
+		do_action('description_meta_box_top', $post);
+		if (un_feedback_has_author($post->ID)){
+			echo '<div class="un-admin-section un-admin-section-first"><strong>'. 'Дата: ' . date("d.m.Y H:i:s", $messages_reply_info['args']['time']) . '<br>'  . 'Тема: ' . $messages_reply_info['args']['subject'] . '<br>'  . 'Отправлено на ' . ': ';
+			un_feedback_author_link($post->ID);
+			echo "</strong></div>";
+		}
+		do_action('description_meta_box_before_content', $post);
+		echo '<div class="un-admin-section un-admin-section-last">';
+		echo nl2br(esc_html($messages_reply_info['args']['message']));
+		echo '</div>';
+		do_action('description_meta_box_bottom', $post);
+	}
+
+
+
+
+
+
+
 		
 	public function post_submit_meta_box($post) {
 		global $action;

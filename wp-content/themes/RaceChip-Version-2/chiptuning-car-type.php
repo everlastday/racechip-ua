@@ -5,7 +5,7 @@
   <div class="content-head-spacer-vchoice"></div>
   <div class="content-box-vchoice clearfix">
     <div class="chiptuning_breadcrump">
-      <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a> &gt; <?php echo ucwords(str_ireplace('-', ' ', $wp_query->query_vars[ 'car_id' ])); ?>
+      <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a> &gt; <?php echo ucwords(urldecode( $wp_query->query_vars[ 'car_id' ])); ?>
     </div><br/>
     <h1>Выберите марку своего автомобиля:</h1>
     <ul class="manufacturers_list">
@@ -15,10 +15,10 @@
         foreach ($model_data as $key => $value):
 
           $key2 = $key;
-          $key = str_replace('/','---', $key);
+          $key = urlencode($key);
             ?>
 
-            <li><a class="list_item list_first" href="<?php echo get_bloginfo('wpurl') . "/chiptuning/" . $wp_query->query_vars[ 'car_id' ] . '/' . str_replace('´', '', strtolower($key)) . '/' ?>"><span class="name" style="width: 100%;"><?php echo $key2 ?></span></a></li>
+            <li><a class="list_item list_first" href="<?php echo get_bloginfo('wpurl') . "/chiptuning/" . $wp_query->query_vars[ 'car_id' ] . '/' . strtolower($key) . '/' ?>"><span class="name" style="width: 100%;"><?php echo $key2 ?></span></a></li>
           <?php
 
         endforeach;

@@ -11,6 +11,7 @@ jQuery(function($){
 						$('#un-reply-loader').hide();
 						$('#replybody').val('');
 						alert(response);
+                        location.reload();
 			});
 	});
 });

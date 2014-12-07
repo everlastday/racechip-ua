@@ -21,8 +21,8 @@
     //print_r($wp_query);
 
     if ( ! empty( $wp_query->query_vars[ 'car_id' ] ) && ! empty( $wp_query->query_vars[ 'car_name' ] ) && ! empty( $wp_query->query_vars[ 'car_model' ] ) ) {
-      if ( preg_match( "/^([a-zA-Z-_]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $get_model ) &&
-        preg_match( "/^([a-zA-Z0-9-()\.\,\+_]*)-(\d{1,5})$/", $wp_query->query_vars[ 'car_name' ], $ok )
+      if ( preg_match( "/^([a-zA-Z-_\+\%]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $get_model ) &&
+        preg_match( "/^([a-zA-Z0-9-()\.\,\+\%_]*)-(\d{1,5})$/", $wp_query->query_vars[ 'car_name' ], $ok )
       ) {
 
         $model_id = (int) $ok[ 2 ];
@@ -158,30 +158,45 @@
       }
 
     } elseif ( ! empty( $wp_query->query_vars[ 'car_id' ] ) && ! empty( $wp_query->query_vars[ 'car_model' ] ) ) {
-      if ( preg_match( "/^([a-zA-Z-_]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
+      if ( preg_match( "/^([a-zA-Z-_\+\%]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
 
 
         // print $wp_query->query_vars[ 'car_model' ];
         //$model        = (int) $ok[ 2 ];
-        $car_brend = $ok[ 1 ];
-        $wp_query->query_vars[ 'car_model' ] = str_replace('---', '/', $wp_query->query_vars[ 'car_model' ]);
+        $car_brend = urldecode($ok[ 1 ]);
+        $wp_query->query_vars[ 'car_model' ] = urldecode($wp_query->query_vars[ 'car_model' ]);
 
         $models_from_db = get_models( $car_brend );
         //d($models_from_db);
         $model_data = array();
+	      $car_brend_array = explode(' ', $car_brend);
         foreach ( $models_from_db as $k => $v ) {
-          $pieces = explode( " ", $v[ name ] );
+          $pieces = explode( " ", $v[ 'name' ] );
 
           //d($wp_query->query_vars[ 'car_model' ]);
 
           // Исключение для автомобилей с маркой которые содержат два слова
-          if ( $pieces[ 1 ] == 'Romeo' || $pieces[ 1 ] == 'Rover' ) {
-            $pieces[ 1 ] = $pieces[ 2 ];
-          }
-          // Фикс для моделей типа Kia Сee´d
-          $pieces[ 1 ] = str_replace('´', '', $pieces[ 1 ]);
+//          if ( $pieces[ 1 ] == 'Romeo' || $pieces[ 1 ] == 'Rover' ) {
+//            $pieces[ 1 ] = $pieces[ 2 ];
+//          }
+//          // Фикс для моделей типа Kia Сee´d
+//          $pieces[ 1 ] = str_replace('´', '', $pieces[ 1 ]);
 
-          if ( strtolower( $pieces[ 1 ] ) == $wp_query->query_vars[ 'car_model' ] ) {
+	        $array_key = 1;
+
+	        if(isset($car_brend_array[1])) $array_key = 2;  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
+
+
+	        $array_key2 = $array_key + 1;
+
+	        if ( ! preg_match( "/\(|\)/", $pieces[ $array_key2 ]) &&  ! preg_match( "/\d+/", $pieces[ $array_key2 ])  && strlen(trim($pieces[ $array_key2 ])) > 3 )
+		        $name_from_db = trim($pieces[ $array_key ] . ' '. $pieces[ $array_key2 ]);
+	        else
+		        $name_from_db =  trim($pieces[ $array_key ]);
+
+
+
+          if ( strtolower( $name_from_db ) == $wp_query->query_vars[ 'car_model' ] ) {
             $data_from_db[ ] = $v;
           }
 
@@ -207,7 +222,7 @@
 
 
       //;
-      if ( preg_match( "/^([a-z-%]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
+      if ( preg_match( "/^([a-z-\+\%]{1,18})$/", $wp_query->query_vars[ 'car_id' ], $ok ) ) {
 
         //$model        = (int) $ok[ 2 ];
         $car_brend = urldecode($ok[ 1 ]);
@@ -225,15 +240,41 @@
 
         //d($data_from_db);
         $model_data = array();
-        foreach ( $data_from_db as $k => $v ) {
-          $pieces = explode( " ", $v[ 'name' ] );
+//        foreach ( $data_from_db as $k => $v ) {
+//          $pieces = explode( " ", $v[ 'name' ] );
+//
+//          if ( ! preg_match( "/^.+-.+$/", $car_brend ) ) {
+//            $model_data[ $pieces[ 1 ] ][ ] = $v;
+//          } else {
+//            $model_data[ $pieces[ 2 ] ][ ] = $v;
+//          }
+//        }
 
-          if ( ! preg_match( "/^.+-.+$/", $car_brend ) ) {
-            $model_data[ $pieces[ 1 ] ][ ] = $v;
-          } else {
-            $model_data[ $pieces[ 2 ] ][ ] = $v;
-          }
-        }
+	      $car_brend_array = explode(' ', $car_brend);
+
+		  foreach ( $data_from_db as $k => $v ) {
+
+		      $pieces = explode( " ", $v[ 'name' ] );  // Розділяєм строку типу  -  Toyota Avensis II (T25) 2.0 D-4D на масив слів.
+
+			  $array_key = 1;
+
+			  if(isset($car_brend_array[1])) $array_key = 2;  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
+
+
+			  $array_key2 = $array_key + 1;
+
+			  if ( ! preg_match( "/\(|\)/", $pieces[ $array_key2 ]) &&  ! preg_match( "/\d+/", $pieces[ $array_key2 ])  && strlen(trim($pieces[ $array_key2 ])) > 3 )
+				  $model_data[ trim($pieces[ $array_key ] . ' '. $pieces[ $array_key2 ]) ][ ] = $v;
+			  else
+				  $model_data[ trim($pieces[ $array_key ]) ][ ] = $v;
+
+
+			  //$pieces = explode(" ", ltrim(strtolower($v[ 'name' ]), strtolower($car_brend)));
+
+				//echo $v[ 'name' ] . "<br>";
+
+
+		  }
 
 
         require_once 'chiptuning-car-type.php';

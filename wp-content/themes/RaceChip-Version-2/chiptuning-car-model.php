@@ -31,7 +31,7 @@ foreach ($data_from_db as $data) {
   <div class="content-head-spacer-vchoice"></div>
   <div class="content-box-vchoice clearfix">
   <div class="chiptuning_breadcrump">
-    <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a> &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/"><?php echo ucwords(str_replace("-", " ", $all_data['model_brend'])); ?></a> &gt; <?php echo ucwords($wp_query->query_vars[ 'car_model' ]); ?>
+    <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a> &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/"><?php echo ucwords(urldecode($all_data['model_brend'])); ?></a> &gt; <?php echo ucwords($wp_query->query_vars[ 'car_model' ]); ?>
   </div>
 
     <h2><?php echo ucwords($wp_query->query_vars[ 'car_model' ]); ?></h2>
@@ -56,10 +56,10 @@ foreach ($data_from_db as $data) {
         </tr>
         </thead>
         <tbody>
-        <?php $wp_query->query_vars[ 'car_model' ] = str_replace('/', '---', $wp_query->query_vars[ 'car_model' ]); ?>
+        <?php //$wp_query->query_vars[ 'car_model' ] = str_replace('/', '---', $wp_query->query_vars[ 'car_model' ]); ?>
 
         <?php foreach ($all_data as $id):
-          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . $wp_query->query_vars[ 'car_model' ] . '/' . $id['name_for_href'] . '-' . $id['id'];
+          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . $id['name_for_href'] . '-' . $id['id'];
           ?>
 
           <?php if ($id['engine'] == 4 or $id['engine'] == 5): ?>
@@ -75,7 +75,7 @@ foreach ($data_from_db as $data) {
 
 
         <?php foreach ($all_data as $id):
-          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . $wp_query->query_vars[ 'car_model' ] . '/' . $id['name_for_href'] . '-' . $id['id'];
+          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . $id['name_for_href'] . '-' . $id['id'];
           ?>
 
         <?php  if($id['engine'] == 1 or $id['engine'] == 2): ?>

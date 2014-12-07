@@ -180,6 +180,8 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
           href="#">Дилеры</a>
         <ul class="sub-menu">
           <li id="menu-item-2635" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22635"><a
+              href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-ukraine/">Украина</a></li>
+	      <li id="menu-item-2635" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22635"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-russia/">Россия</a></li>
           <li id="menu-item-2625" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22625"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-belarus/">Белоруссия</a></li>

@@ -5,9 +5,9 @@
 
 <div class="chiptuning_breadcrump"><a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a>
   &gt;
-  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo str_replace(' ', '-', $all_data['model_brend']); ?>/"><?php echo ucwords($all_data['model_brend']); ?></a>
+  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/"><?php echo ucwords(urldecode($all_data['model_brend'])); ?></a>
   &gt;
-  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/<?php echo $wp_query->query_vars[ 'car_model' ]; ?>/"><?php echo ucwords($wp_query->query_vars[ 'car_model' ]); ?></a>
+  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/<?php echo $wp_query->query_vars[ 'car_model' ]; ?>/"><?php echo ucwords(urldecode($wp_query->query_vars[ 'car_model' ])); ?></a>
    &gt;
   <? echo trim(str_ireplace(str_ireplace('-', ' ', $wp_query->query_vars['car_id']) . ' ' . $wp_query->query_vars['car_model'], '', $all_data[ 'vehicle_name' ])); ?>
 </div>

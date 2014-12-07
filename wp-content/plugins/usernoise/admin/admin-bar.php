@@ -15,7 +15,7 @@ class UN_Admin_Bar{
 		}
 		$wp_admin_bar->add_menu(array(
 			'title' => sprintf(__('Обратная связь %s'), $new_feedback),
-			'href' => admin_url('edit.php?order=desc&post_type=' . FEEDBACK . 
+			'href' => admin_url('edit.php?order=desc&post_type=' . FEEDBACK .
 				($new_feedback_count ? '&post_status=pending' : '')),
 			'id' => 'un-usernoise'
 			));
