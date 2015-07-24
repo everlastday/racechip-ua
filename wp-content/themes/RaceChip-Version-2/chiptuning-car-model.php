@@ -59,7 +59,7 @@ foreach ($data_from_db as $data) {
         <?php //$wp_query->query_vars[ 'car_model' ] = str_replace('/', '---', $wp_query->query_vars[ 'car_model' ]); ?>
 
         <?php foreach ($all_data as $id):
-          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . $id['name_for_href'] . '-' . $id['id'];
+          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . urlencode($id['name_for_href']) . '-' . $id['id'];
           ?>
 
           <?php if ($id['engine'] == 4 or $id['engine'] == 5): ?>
@@ -75,10 +75,10 @@ foreach ($data_from_db as $data) {
 
 
         <?php foreach ($all_data as $id):
-          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . $id['name_for_href'] . '-' . $id['id'];
+          $href = get_bloginfo('wpurl') .  '/chiptuning/' . $id['model'] . '/' . urlencode($wp_query->query_vars[ 'car_model' ]) . '/' . urlencode($id['name_for_href']). '-' . $id['id'];
           ?>
 
-        <?php  if($id['engine'] == 1 or $id['engine'] == 2): ?>
+        <?php  if(isset($id['engine']) and $id['engine'] == 1 or $id['engine'] == 2): ?>
             <?php  if( ! isset( $spacer ) ): ?>
             <tr class="spacer">
               <td class="dif"></td>

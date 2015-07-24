@@ -55,7 +55,7 @@ foreach ($objWorksheet->getRowIterator() as $row) {
     foreach ($cellIterator as $cell) {
 
 
-
+      // В файлі існують пусті колнки і ми їх всі пропускаємо.
         if( $cnt != 4 and $cnt != 6  and $cnt != 10 and $cnt != 12 and $cnt != 13 and $cnt != 14 and $cnt != 15 ) {
 
             $value = (string)$cell->getValue();

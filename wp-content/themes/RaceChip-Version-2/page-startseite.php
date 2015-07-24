@@ -27,7 +27,7 @@ get_header(); ?>
                     <a href="/racechip-ultimate">RaceChip® Ultimate</a><br>
                     <span style="font-size: 10px;">от 459 EUR</span></td>
                 <td width="280px"><a href="/racechip-pro2">RaceChip® Pro2</a><br>
-                    <span style="font-size: 10px;">от 275 EUR</span></td>
+                    <span style="font-size: 10px;">от 299 EUR</span></td>
                 <td width="200px"><a href="/racechip">RaceChip®</a><br>
                     <span style="font-size: 10px;">от 175 EUR</span></td>
                 <td width="241px">Новинка: <a href="/responsecontrol">Response Control</a><br>

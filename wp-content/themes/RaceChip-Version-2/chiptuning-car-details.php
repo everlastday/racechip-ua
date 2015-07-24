@@ -308,6 +308,11 @@ function rc_perc_chg($chg_param, $basic_param) {
       <a rel="lytebox[rc-ultimate]"
         href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module-full-size.jpg">
         <img width="196" height="144" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
+		<a class="testsieger" href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/">
+			<img  src="<?php bloginfo('template_directory'); ?>/images/test_badges.png" />
+		</a>
+
+
     </td>
   </tr>
   <tr class="specs">

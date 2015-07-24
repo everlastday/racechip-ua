@@ -12,6 +12,8 @@
                 $all_data[$data['id']] = $data['name'];
               }
 
+                asort($all_data);
+
               foreach ($all_data as $key => $value) {
                 //$all_data_r[$key] = preg_replace("/ /", "-", $value);
                 //$all_data_r[$key] = preg_replace("/ \/ | /", "-", $value);

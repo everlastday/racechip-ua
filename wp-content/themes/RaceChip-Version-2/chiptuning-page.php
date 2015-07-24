@@ -129,14 +129,14 @@
 
             if ( in_array( $all_data[ 'vehicle_name' ], $bmw_only_ultimate ) ) {
               //print 'your price eq 529';
-              $all_data[ 'price_ultimate_new' ] = 549;
+              $all_data[ 'price_ultimate_new' ] = 549;  // 549
               $page_template                = 'chiptuning-car-details2.php';
             } elseif ( in_array( $all_data[ 'vehicle_name' ], $bmw_m_only_ultimate ) ) {
-              $all_data[ 'price_ultimate_new' ] = 879;
+              $all_data[ 'price_ultimate_new' ] = 549;  // 879
               $page_template                = 'chiptuning-car-details2.php';
             } elseif ( empty($all_data[2]) ) {
               $all_data[ 'price_ultimate' ] = null;
-              $all_data[ 'price_ultimate_new' ] = 549;
+              $all_data[ 'price_ultimate_new' ] = 549; // 549
               $page_template                = 'chiptuning-car-details2.php';
             } else {
               $page_template = 'chiptuning-car-details.php';

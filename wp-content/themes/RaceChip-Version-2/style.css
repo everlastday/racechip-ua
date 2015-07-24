@@ -453,7 +453,7 @@ table.details form input.btn_add_to_cart:hover{background-position: right -34px;
 .details .sep {border-right: #16181D 2px solid;}
 .details .info {color: #FFF;}
 .details .head {padding-left: 0px;}
-.details .price .info.head, #details .price .info.head {height: 328px;}
+.details .price .info.head, #details .price .info.head {height: 403px;}
 .details tr.price {height: 128px;}
 .details .specs .info.ico {height: 18px;}
 .details .specs .case {height: 60px;}
@@ -471,7 +471,7 @@ table.details form input.btn_add_to_cart:hover{background-position: right -34px;
 .details p.shipping-costs a:hover {text-decoration: underline;}
 .details p.shipping-costs a {font-weight: normal;color: #000;}
 .details .warenkorb td {padding-left: 0;}
-.details .product-image td {padding-left: 0;padding-right: 0;text-align: center;}
+.details .product-image td {padding-left: 0;padding-right: 0;text-align: center; height: 220px;}
 .details #legal-tr td { vertical-align: middle;}
 .details .stock {text-align: center;padding: 10px 0;}
 .details .bullet {display: inline-block;width: 8px;height: 8px;-webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.5);-moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.5);box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.5);-moz-border-radius: 50px;-webkit-border-radius: 50px;border-radius: 50px;}
@@ -1051,7 +1051,7 @@ body.error404 div#content div.entry-content ul{font-size: 10pt;line-height: 150%
 /***TAB-BUTTON **/
 /********chipauswahl a-b test emplate 2013-08-25*****/
 #rc-chipauswahl-box .hidden {display:none;}
-#rc-chipauswahl-box {color:fff;width:100%;font-weight:normal;font-size:12px;text-align:left;}
+#rc-chipauswahl-box {color:#fff;width:100%;font-weight:normal;font-size:12px;text-align:left;}
 #rc-chipauswahl-tab-content {background:#16181D;}
 #rc-chipauswahl-tabs {border:none;margin:0;padding:0;background-color:#262A33;}
 #rc-chipauswahl-tabs ul {background:none;border:none;padding:0;margin:0}
@@ -1074,7 +1074,7 @@ body.error404 div#content div.entry-content ul{font-size: 10pt;line-height: 150%
 #rc-chipauswahl-box .singleArticle_images_small {height:140px;}
 #rc-chipauswahl-box .singleArticle_images_small a {display:block;width:60px;height:60px;line-height:60px;text-align:center;margin:0 10px 10px 0;float:left;background:url(images/artikelbild-small.png) no-repeat;}
 #rc-chipauswahl-box .singleArticle_images_small img {margin:0;}
-#rc-chipauswahl-box .preis {margin-top:29px;width:99,5%;height:150px;background:#3B3F45;border:1px solid #fff;color:#fff;}
+#rc-chipauswahl-box .preis {margin-top:29px;width:99.5%;height:150px;background:#3B3F45;border:1px solid #fff;color:#fff;}
 #rc-chipauswahl-box .preis ul {margin:10px 20px 18px 0;padding:0;list-style:none;float:right}
 #rc-chipauswahl-box .price {line-height:44px;font-size:35px;font-weight:bold;color:#fff !important;}
 #rc-chipauswahl-box .tax {font-size:12px !important; line-height:1.5em;text-align:right;}
@@ -1335,7 +1335,7 @@ div#information{overflow: hidden;}
 .details .warranty-li-ex .preis {text-align:center;border-left:1px solid #000;float: right;margin-left: 0;margin-right: 5px;margin-top: -5px;padding: 9px 10px; width:42px;margin-bottom:-7px;font-size:12px!important}
 .details .warranty-li-in {height:25px; background: #393939; border-bottom: 1px solid #000; border-top: 1px solid #000 ;margin: 0; padding: 5px; width: 223px;}
 .warranty-li-in p {float:left;background: url("/images/chiptuning/check-motorgarantie.png") no-repeat 0 6px;margin: 0; padding: 4px 0 0 20px;font-size:11px!important;}
-.details .dark {background:#a2a2a2}
+/*.details .dark {background:#a2a2a2}*/
 .details .warranty-li-in .preis {font-size:12px!important;background:none!important;border-left:1px solid #000;float: right;margin-left: 0;margin-right: 5px;margin-top: -5px;padding: 9px 10px; width: 42px;margin-bottom:-7px;}
 .details .product-price ul {margin:0;padding:0;height:67px;background:#ccc;float:left;list-style:none;text-align:left}
 .details .product-price ul .second {font-size:13px;float:right;background:#f43a00;width:72px;display:block;height:50px;margin:0}
@@ -1691,4 +1691,13 @@ div.HgSchraeg:before  { width: 0;  content: '';  position: absolute;  top: 0;  r
     background: none !important;
     display: none !important;
 }
-
+.button-c2a-l.bigsize {
+    width: 280px;
+}
+a.testsieger img {
+    padding-top: 5px;
+    opacity: 0.5;
+}
+a.testsieger:hover img {
+    opacity: 1;
+}

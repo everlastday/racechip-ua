@@ -1,1 +1,2 @@
 [15-Jun-2014 10:03:13 America/Denver] PHP Warning:  session_start(): The session id is too long or contains illegal characters, valid characters are a-z, A-Z, 0-9 and '-,' in /home2/racechip/public_html/wp-content/plugins/usernoise/EasyCaptcha/php-captcha.inc.php on line 46
+[24-Nov-2014 08:44:57 America/Denver] PHP Warning:  imagejpeg(): gd-jpeg: JPEG library reports unrecoverable error:  in /home2/racechip/public_html/wp-content/plugins/usernoise/EasyCaptcha/php-captcha.inc.php on line 343

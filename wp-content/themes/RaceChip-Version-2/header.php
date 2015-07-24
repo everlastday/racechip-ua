@@ -187,7 +187,7 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-belarus/">Белоруссия</a></li>
 
           <li id="menu-item-2523" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-22523"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-portal/">Кабинет <br/>для дилеров</a></li>
+              href="<?php echo get_bloginfo( 'wpurl' ); ?>/reseller-portal/">Для дилеров</a></li>
         </ul>
 
 
