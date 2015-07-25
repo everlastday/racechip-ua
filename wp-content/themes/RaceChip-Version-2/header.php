@@ -83,8 +83,8 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
 <div class="header-right-title"><p>Надежная работа с RaceChip</p></div>
 <ul class="right-images">
 <li class="first"><a href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/"><img class="tooltip_c" title="RaceChip выиграл сравнительный тест." src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/testsieger_eurotuner.png" alt="RaceChip победитель" /></a></li>
+<li><img class="tooltip_c" style="margin:10px" title="Мы принимаем к оплате пластиковые карты Visa/Mastercard" src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/mastervisa.jpg" alt="Оплата картами Visa/Mastercard"/></li>
 <li><a href="http://racechip.com.ua/technology-and-quality"><img class="tooltip_c" title="RaceChip имеет сертификацию TÜV, что подтверждает безопасность использования чип-блоков с узлами и агрегатами авто" src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/racechip-header-tuev.png" alt="RaceChip TÜV"/></a></li>
-<li><img class="tooltip_c" title="Безопасная передача данных через SSL. Ваши данные передаются по зашифрованному соединению и недоступны к просмотру третьим лицам" src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/racechip-header-safeshopping.png" alt="RaceChip безопасность совершения покупок"/></li>
 <li class="last"><a href="https://www.trustedshops.de/bewertung/info_X1CFDC3E5246F688855B6B5E710EAE164.html"><img class="tooltip_c" title="Мы являемся членом Trusted Shops. Этот независимый инструмент по отзывам клиентов дает возможность оценить нас после покупки. Нашу оценку можно посмотреть, нажав на иконку." src="<?php echo TEMPLATE_DIRECTORY_URI; ?>/images/racechip-header-trusted.png" alt="Trusted Shop Racechip" /></a></li>
 </ul>
 </div>
