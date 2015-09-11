@@ -101,25 +101,6 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
       <li id="menu-item-2631"
         class="first-home menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-26 current_page_item menu-item-2631">
         <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/">Главная страница</a></li>
-      <li id="menu-item-2522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2522"><a
-          href="#">Продукты</a>
-        <ul class="sub-menu">
-          <li id="menu-item-2628" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2628"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip/">RaceChip</a></li>
-          <li id="menu-item-2629" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2629"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-pro2/">RaceChip Pro2</a></li>
-          <li id="menu-item-2630" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2630"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-ultimate/">RaceChip Ultimate</a></li>
-          <li id="menu-item-26302" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26302"><a
-                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol-2/">Response Control</a></li>
-          <li id="menu-item-2626" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2626"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/kn-air-filter/">Возд. фильтры K&ampN</a></li>
-          <li id="menu-item-2624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2624"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/eco-chiptuning/">Eco-Tuning</a></li>
-          <li id="menu-item-2624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2624"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/module-exhaust-systems/">Модуль <br>выхлопных систем</a></li>
-        </ul>
-      </li>
       <li id="menu-item-2622" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2622"><a
           href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля<!--[if gte IE 7]><!--></a><!--<![endif]-->
         <!--[if lte IE 6]>
@@ -149,17 +130,29 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
 
       </li>
       <li id="menu-item-2525" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2525"><a
-          href="#">О RaceChip</a>
+          href="#">Продукты RaceChip</a>
         <ul class="sub-menu">
-          <li id="menu-item-2633" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2633"><a
+            <li id="menu-item-2628" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2628"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip/">RaceChip</a></li>
+            <li id="menu-item-2629" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2629"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-pro2/">RaceChip Pro2</a></li>
+            <li id="menu-item-2630" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2630"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-ultimate/">RaceChip Ultimate</a></li>
+            <li id="menu-item-26302" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26302"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol-2/">Response Control</a></li>
+            <li id="menu-item-2626" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2626"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/kn-air-filter/">Возд. фильтры K&ampN</a></li>
+            <li id="menu-item-2624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2624"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/eco-chiptuning/">Eco-Tuning</a></li>
+            <li id="menu-item-2624" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2624"><a
+                    href="<?php echo get_bloginfo( 'wpurl' ); ?>/module-exhaust-systems/">Модуль <br>выхлопных систем</a></li>
+            <li id="menu-item-2633" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2633"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/company/">Компания</a></li>
-          <li id="menu-item-2632" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2632"><a
-              href="<?php echo get_bloginfo( 'wpurl' ); ?>/reviews/">Отзывы</a></li>
-          <li id="menu-item-2632" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2632"><a
+            <li id="menu-item-2632" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2632"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/technology-and-quality/">Технология и качество</a></li>
-          <li id="menu-item-2623" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2623"><a
+            <li id="menu-item-2623" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2623"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning-chronicle/">Хроника чиптюнинга</a></li>
-          <li id="menu-item-2665" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2665"><a
+            <li id="menu-item-2665" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2665"><a
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/category/news/">Новости</a></li>
         </ul>
       </li>
@@ -176,6 +169,9 @@ if(is_handheld() and $_GET['mobile'] != 1 and $_COOKIE['r_full_version']  != 1) 
               href="<?php echo get_bloginfo( 'wpurl' ); ?>/shipping-and-payment/">Стоимость доставки</a></li>
         </ul>
       </li>
+        <li id="menu-item-2522" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2522">
+            <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/reviews/">Отзывы</a>
+        </li>
       <li id="menu-item-2523" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2523"><a
           href="#">Дилеры</a>
         <ul class="sub-menu">
