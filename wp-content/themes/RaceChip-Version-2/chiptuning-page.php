@@ -86,7 +86,7 @@
         //print_r($all_data);
         //echo "</pre>";
 
-        if ( $all_data[ 0 ][ 'box_class' ] != 5 ) {
+        if ( $all_data[ 0 ][ 'box_class' ] != 5 and $all_data[ 0 ][ 'box_class' ] != 33 ) {
           //echo $all_data[ 2 ][ 'box_name' ];
 
 
