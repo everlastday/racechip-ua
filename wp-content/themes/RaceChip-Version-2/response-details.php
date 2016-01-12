@@ -57,7 +57,7 @@ else
 
     <div class="priceinf">
 
-        <p style="float:left;margin:0px;width:100%" class="price">€ 199,-</p>
+        <p style="float:left;margin:0px;width:100%" class="price">€ 219,-</p>
 
         <div id="detail_towk_btn_rc_response" class="cta2013-btn online-message-btn" data-chip="ResponseControl" data-model="<? echo $full_model ?>">Заказать</div>
         <p style="margin:8px 0 0 0;float:left;text-align:left;padding-left:40px;" class="mwst"></p>
