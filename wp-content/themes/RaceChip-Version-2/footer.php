@@ -11,8 +11,7 @@
 */
 ?>
 </div>
-<meta itemprop="url" content="http://racechip.com.ua">
-<meta itemprop="name" content="RaceChip Chiptuning Ukraine"></span>
+
 <div class="container_24">
 <div id="racechip-main-bottom"></div>
 <div class="grid_24"><div id="copyright">

@@ -9,7 +9,7 @@
             <?php
             $data_from_db = get_response();
             foreach ($data_from_db as $data) {
-                $all_data[ $data[ 'id' ] ] = $data[ 'name' ];
+                $all_data[ $data[ 'id' ] ] = trim($data[ 'name' ]);
             }
             foreach ($all_data as $key => $value) {
                 //$all_data_r[$key] = preg_replace("/ /", "-", $value);
@@ -18,7 +18,7 @@
             }
             foreach ($all_data_r as $key => $value):
                 if (isset( $all_data[ $key ] ) && is_numeric($key)):
-                    $value            = urlencode(strtolower(trim($value)));
+                    $value            = strtolower(trim($value));
                     $all_data[ $key ] = trim($all_data[ $key ]);
                     ?>
 

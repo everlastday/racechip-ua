@@ -5,7 +5,12 @@
   <div class="content-head-spacer-vchoice"></div>
   <div class="content-box-vchoice clearfix">
     <div class="chiptuning_breadcrump">
-      <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/">ResponseControl</a> &gt; <?php echo ucwords(str_ireplace('-', ' ', $wp_query->query_vars[ 'response_id' ])); ?>
+        <?php
+
+        $vehicle_name = (isset($model_data[0]['name'])) ? $model_data[0]['name'] : urldecode(ucwords($wp_query->query_vars[ 'response_id' ])); ?>
+
+
+      <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/">ResponseControl</a> &gt; <?=$vehicle_name ?>
     </div><br/>
     <h1>Выберите марку своего автомобиля:</h1>
     <ul class="manufacturers_list">
@@ -14,11 +19,13 @@
 
         foreach ($model_data as $key => $value):
 
-          $key2 = $key;
-          $key = str_replace('/','---', $key);
+          $model = trim($value['model']);
+          $model2 = $model;
+
+          $value['name'] = str_replace('/','---', $value['name']);
             ?>
 
-            <li><a class="list_item list_first" href="<?php echo get_bloginfo('wpurl') . "/responsecontrol/" . $wp_query->query_vars[ 'response_id' ] . '/' . urlencode(strtolower($key)) . '/' ?>"><span class="name" style="width: 100%;"><?php echo $key2 ?></span></a></li>
+            <li><a class="list_item list_first" href="<?php echo get_bloginfo('wpurl') . "/responsecontrol/" . $wp_query->query_vars[ 'response_id' ] . '/' . urlencode(strtolower($model)) . '/' ?>"><span class="name" style="width: 100%;"><?php echo $model2 ?></span></a></li>
           <?php
 
         endforeach;

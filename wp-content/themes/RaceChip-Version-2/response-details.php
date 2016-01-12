@@ -1,11 +1,19 @@
 <?
 
-if(isset($data_from_db[0]['vehicle_name']) and !empty($data_from_db[0]['vehicle_name']))
-    $vehicle_name = $data_from_db[0]['vehicle_name'];
-else
-    $vehicle_name = urldecode($wp_query->query_vars[ 'response_id' ]);
+if(isset($details_from_db[0]['name']) and !empty($details_from_db[0]['name'])) {
+    $name = trim($details_from_db[0]['name']);
+    $model = trim($details_from_db[0]['model']);
+    $submodel = trim($details_from_db[0]['submodel']);
+}
 
-  $full_model = $vehicle_name . ' ' .  ucwords(urldecode($wp_query->query_vars[ 'response_model' ])) . ' ' .  $data_from_db[0]['engine'];
+else {
+    $name = urldecode($wp_query->query_vars[ 'response_id' ]);
+    $model = ucwords(urldecode($wp_query->query_vars[ 'response_model' ]));
+    $submodel = urldecode($wp_query->query_vars[ 'response_name' ]);
+}
+
+
+  $full_model = $name . ' ' .  $model . ' ' .  $submodel;
 ?>
 
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
@@ -49,7 +57,7 @@ else
 <div class="resonsecntDetail" style="margin: 0 auto"><!-- detail container start -->
 
 <div class="chiptuning_breadcrump" style="margin: 10px 0">
-    <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/">ResponseControl</a> &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/<?php echo urlencode(strtolower($vehicle_name)); ?>/"><?php echo $vehicle_name; ?></a>  &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/<?php echo urlencode(strtolower($vehicle_name)) . '/' . urlencode($wp_query->query_vars[ 'response_model' ]); ?>/"><?php echo ucwords(urldecode($wp_query->query_vars[ 'response_model' ])); ?></a> &gt; <?php echo urldecode($wp_query->query_vars[ 'response_name' ]); ?>
+    <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/">ResponseControl</a> &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/<?php echo urlencode(strtolower($name)); ?>/"><?php echo $name; ?></a>  &gt; <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/responsecontrol/<?php echo urlencode(strtolower($name)) . '/' . urlencode($model); ?>/"><?=$model; ?></a> &gt; <?=$submodel; ?>
 </div>
 <h1>RaceChip ResponseControl для  <?php echo $full_model ?> </h1>
 <h3 class="pagetitle">RaceChip Response Control &#8211; ускорение отклика педали газа для Вашего авто</h3>
