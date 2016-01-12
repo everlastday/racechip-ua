@@ -347,6 +347,155 @@ function get_response_models($car_brend = 'null', $return_id = 0) {
     }
 }
 
+// Функции для подбора авто на главной
+
+function get_vehicles_input()
+{
+    $data_from_db = get_chiptuning();
+    foreach ($data_from_db as $data) {
+        $all_data[ $data[ 'id' ] ] = $data[ 'name' ];
+    }
+    asort($all_data);
+    foreach ($all_data as $key => $value) {
+        echo '<option value="' . urlencode(strtolower(trim($value))) . '">' . $value . '</option>';
+    }
+}
+
+add_action('wp_ajax_rc_get_type', 'rcGetTypeAjax');
+add_action('wp_ajax_nopriv_rc_get_type', 'rcGetTypeAjax');
+function rcGetTypeAjax()
+{
+    //global $mydb;
+
+    //$brand_id = $_POST[ 'brand_id' ] + 0; // забираєм першу букву, щоб залишились тільки цифри
+    $brand_id  = urldecode($_POST[ 'brand_id' ]);
+
+    if (isset( $brand_id )) {
+        $car_brend    = $brand_id;
+        $data_from_db = get_models($car_brend);
+        //d($data_from_db);
+        $table_id = get_models($car_brend, 1);
+        //echo $table_id;
+        $racechip_info = racechip_info('vehicles', $table_id);
+        //d($data_from_db);
+        $model_data      = array();
+        $car_brend_array = explode(' ', $car_brend);
+        foreach ($data_from_db as $k => $v) {
+            $pieces    = explode(" ",
+                $v[ 'name' ]);  // Розділяєм строку типу  -  Toyota Avensis II (T25) 2.0 D-4D на масив слів.
+            $array_key = 1;
+            if (isset( $car_brend_array[ 1 ] )) {
+                $array_key = 2;
+            }  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
+            $array_key2 = $array_key + 1;
+            if ( ! preg_match("/\(|\)/", $pieces[ $array_key2 ]) && ! preg_match("/\d+/",
+                    $pieces[ $array_key2 ]) && strlen(trim($pieces[ $array_key2 ])) > 3
+            ) {
+                $model_data[ trim($pieces[ $array_key ] . ' ' . $pieces[ $array_key2 ]) ][] = $v;
+            } else {
+                $model_data[ trim($pieces[ $array_key ]) ][] = $v;
+            }
+        }
+        // Sort alphabetical
+        $data = '<option value="0">Выберите модель...</option>';
+        foreach ($model_data as $key => $value) {
+            $key2 = $key;
+            $key  = urlencode($key);
+            $data .= '<option value=' . strtolower($key) . '>' . $key2 . '</option>';
+        }
+        echo $data;
+        wp_die();
+    } else {
+        return 0;
+        wp_die();
+    }
+    wp_die();
+}
 
 
+add_action('wp_ajax_rc_get_model', 'rcGetModelAjax');
+add_action('wp_ajax_nopriv_rc_get_model', 'rcGetModelAjax');
+function rcGetModelAjax()
+{
+    //global $mydb;
 
+    //$brand_id = $_POST[ 'brand_id' ] + 0; // забираєм першу букву, щоб залишились тільки цифри
+    $car_type  = urldecode($_POST[ 'brand_id' ]);
+    $car_brend  =  urldecode($_POST[ 'car_type' ]);
+
+    if (isset( $car_brend )) {
+        //print 'lol';
+        $models_from_db = get_models( $car_brend );
+
+        $model_data = array();
+        $car_brend_array = explode(' ', $car_brend);
+
+
+        $data_from_db = array();
+        foreach ( $models_from_db as $k => $v ) {
+            $pieces = explode(" ", $v[ 'name' ]);
+            $array_key = 1;
+            if (isset( $car_brend_array[ 1 ] )) {
+                $array_key = 2;
+            }  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
+            $array_key2 = $array_key + 1;
+            if ( ! preg_match("/\(|\)/", $pieces[ $array_key2 ]) && ! preg_match("/\d+/",
+                    $pieces[ $array_key2 ]) && strlen(trim($pieces[ $array_key2 ])) > 3
+            ) {
+                $name_from_db = trim($pieces[ $array_key ] . ' ' . $pieces[ $array_key2 ]);
+            } else {
+                $name_from_db = trim($pieces[ $array_key ]);
+            }
+
+
+            if (strtolower($name_from_db) == strtolower($car_type)) {
+                $data_from_db[] = $v;
+                //$sss .= $name_from_db . ' - ' . $car_type . ',';
+            }
+
+        }
+
+        //d($data_from_db);
+
+        foreach ($data_from_db as $data) {
+            //print $data['name'];
+
+            $all_data[$data['id']]['id'] = $data['id'];
+            $all_data[$data['id']]['name'] = $data['name'];
+            $all_data[$data['id']]['engine'] = $data['engine'];
+            $all_data[$data['id']]['capacity'] = $data['capacity'];
+            $all_data[$data['id']]['power'] = $data['power'];
+            $all_data[$data['id']]['torque'] = $data['torque'];
+            $all_data[$data['id']]['model'] = $car_brend;
+            //$all_data['model_brend'] = preg_replace("/-\d+/", "", $all_data[$data['id']]['model']);
+
+            $data['original_name'] = $data['name'];
+
+            $data['name'] = trim(str_ireplace(str_ireplace('-', ' ', $car_brend) . ' ' . $car_type, '', $data['name']));
+
+
+            $all_data[$data['id']]['name_for_href'] = preg_replace("/ \/ | /", "-", $data['name']);
+            $all_data[$data['id']]['name_for_href'] = preg_replace("/\//", "+", $all_data[$data['id']]['name_for_href']);
+            $all_data[$data['id']]['name_for_href'] = preg_replace("/>/", "_", $all_data[$data['id']]['name_for_href']);
+            $all_data[$data['id']]['name_for_href'] = preg_replace("/é/", "e", $all_data[$data['id']]['name_for_href']);
+            $all_data[$data['id']]['name_for_href'] = str_replace("´", "", $all_data[$data['id']]['name_for_href']);
+
+        }
+
+        // d($all_data);
+
+        // Sort alphabetical
+        $info = '<option value="0">Выберите модификацию...</option>';
+        foreach ($all_data as $id) {
+            $href = get_bloginfo('wpurl') .  '/chiptuning/' . urlencode($id['model']) . '/' . urlencode($car_type) . '/' . urlencode($id['name_for_href']) . '-' . $id['id'];
+
+            $info .= '<option value="' . $href . '">' . $id['name'] . ' ' . $id['capacity'] . 'cm&sup3' . ' ' . $id['power'] . 'kW '  .  round($id['power'] * 1.36 ) . 'PS' . '</option>';
+        }
+        echo $info;
+        wp_die();
+    } else {
+        return 0;
+        wp_die();
+    }
+    wp_die();
+}

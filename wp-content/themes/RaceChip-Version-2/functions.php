@@ -230,6 +230,30 @@ function RacechipCss(){
     wp_enqueue_script('rc-js-jquery-ui');
   }
   wp_enqueue_script('rctheme');
+
+	//  Скрипты для подбора на главной
+	if(is_front_page()) {
+		wp_register_style( 'selectric.css', get_template_directory_uri() . '/css/selectric.css', array(), '1.0.1', 'all' );
+		wp_enqueue_style( 'selectric.css' );
+
+		wp_register_script( 'jquery.selectric.js', get_template_directory_uri() . '/js/jquery.selectric.js', array('jquery'), '1.0', false );
+		wp_enqueue_script('jquery.selectric.js');
+
+
+		wp_register_style( 'perfect-scrollbar.min.css', get_template_directory_uri() . '/css/perfect-scrollbar.min.css', array(), '1.0.2', 'all' );
+		wp_enqueue_style( 'perfect-scrollbar.min.css' );
+
+		wp_register_script( 'perfect-scrollbar.js', get_template_directory_uri() . '/js/perfect-scrollbar-0.4.10.with-mousewheel.min.js', array('jquery'), '2.0', false );
+		wp_enqueue_script('perfect-scrollbar.js');
+
+		wp_register_script( 'jquery.select-ajax.js', get_template_directory_uri() . '/js/jquery.select-ajax.js', array('jquery'), '3.0', false );
+		wp_enqueue_script('jquery.select-ajax.js');
+	}
+
+
+	wp_localize_script( 'jquery', 'myajax', array( 'url' => admin_url('admin-ajax.php'), 'RcTemplateUrl' => get_stylesheet_directory_uri(), 'baseurl' => get_site_url() ));
+
+
 }
 // removed style include during perfomance optimisation
 add_action( 'wp_enqueue_scripts', 'RacechipCss' );
@@ -876,3 +900,10 @@ add_filter( 'generate_rewrite_rules', 'feed_dir_rewrite' );
   }
 
   add_filter('tiny_mce_before_init', 'change_mce_options');
+
+function cut_string($string, $length){
+	$string = mb_substr($string, 0, $length,'UTF-8');
+	$pos = mb_strrpos($string, ' ', 'UTF-8');
+	$string = mb_substr($string, 0, $pos, 'UTF-8');
+	return $string;
+}
