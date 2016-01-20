@@ -3,31 +3,30 @@
 <div class="content-head-spacer-vchoice"></div>
 <div class="content-box-vchoice clearfix">
 
-<div class="chiptuning_breadcrump"><a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/">Выбор автомобиля</a>
-  &gt;
-  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/"><?php echo ucwords(urldecode($all_data['model_brend'])); ?></a>
-  &gt;
-  <a href="<?php echo get_bloginfo( 'wpurl' ); ?>/chiptuning/<?php echo $all_data['model_brend']; ?>/<?php echo $wp_query->query_vars[ 'car_model' ]; ?>/"><?php echo ucwords(urldecode($wp_query->query_vars[ 'car_model' ])); ?></a>
-   &gt;
-  <? echo trim(str_ireplace(str_ireplace('-', ' ', $wp_query->query_vars['car_id']) . ' ' . $wp_query->query_vars['car_model'], '', $all_data[ 'vehicle_name' ])); ?>
+<div class="chiptuning_breadcrump">
+    <?php
+        $brand = isset( $racechips[ 0 ][ 'name' ] ) ? $racechips[ 0 ][ 'name' ] : 'Name';
+        $model = isset( $racechips[ 0 ][ 'model' ] ) ? $racechips[ 0 ][ 'model' ] : 'Model';
+        $submodel = isset( $racechips[ 0 ][ 'submodel' ] ) ? $racechips[ 0 ][ 'submodel' ] : 'Submodel';
+
+        $full_car_name = $brand . ' ' . $model . ' ' . $submodel;
+        $graph = 0;
+
+        if($racechips[ 0 ][ 'img' ]  != '-' or $racechips[ 1 ][ 'img' ]  != '-' or $racechips[ 2 ][ 'img' ]  != '-')  $graph = 1;
+
+    ?>
+    <a href="<?php echo get_bloginfo('wpurl'); ?>/chiptuning/">Выбор автомобиля</a> &gt;
+    <a href="<?php echo get_bloginfo('wpurl'); ?>/chiptuning/<?php echo urlencode(strtolower($brand)); ?>/"><?=$brand;?></a> &gt;
+    <a href="<?php echo get_bloginfo('wpurl'); ?>/chiptuning/<?php echo urlencode(strtolower($brand)) . '/' . urlencode(strtolower($model)) ?>/"><?=$model;?></a>
+    &gt; <?=$submodel?>
+
 </div>
-<h2><? echo $all_data[ 'vehicle_name' ]; ?></h2>
+<h2><?=$full_car_name?></h2>
 
 <p style="padding-right: 20px;"><strong>Примечание:</strong> Представленные здесь данные о мощности являются
   максимально достижимыми показателями. Фактическая мощность зависит от серийного допуска транспортного средства. Мы
   поставляем RaceChip уже оптимально-настроенным для Вашего автомобиля. Вы также можете сами настраивать мощность на
   RaceChip по своему желанию.</p>
-<?php
-
-function rc_ps($ps) {
-  return round( ( $ps * 1.36 ) );
-}
-
-function rc_perc_chg($chg_param, $basic_param) {
-  return round( ( $chg_param / ( $basic_param / 100 ) ) - 100 );
-}
-
-?>
 
 
 <div class="product_details">
@@ -42,17 +41,22 @@ function rc_perc_chg($chg_param, $basic_param) {
   </thead>
   <tbody>
   <tr class="leistung">
-    <td class="info top_border"><?= $all_data[ 'power' ] ?> kW</td>
+    <td class="info top_border"><?=$racechips[ 0 ][ 'base_kw' ] ?> кВт</td>
   </tr>
   <tr class="leistung">
-    <td class="info top_border"><?= rc_ps( $all_data[ 'power' ] ) ?> PS</td>
+    <td class="info top_border"><?=$racechips[ 0 ][ 'base_ps' ] ?> л.с</td>
   </tr>
   <tr class="leistung">
-    <td class="info top_border"><?= $all_data[ 'torque' ] ?> Nm</td>
+    <td class="info top_border"><?=$racechips[ 0 ][ 'base_nm' ] ?> Нм</td>
   </tr>
   <tr class="tuning">
     <td class="info head top_border bottom_border"> Экономия топлива </td>
   </tr>
+  <?php if($graph == 1): ?>
+  <tr class="performance-graph">
+    <th>&nbsp;</th>
+  </tr>
+  <?php endif; ?>
   <tr class="price">
     <td class="info head"><p>Содержимое</p>
       <ul>
@@ -94,8 +98,8 @@ function rc_perc_chg($chg_param, $basic_param) {
   <tr class="head">
     <th colspan="2" class="dark sep">
       <a title="RaceChip" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip">
-      </a>RaceChip</th>
+        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?> ">
+      </a><?=$racechips[ 0 ][ 'title' ] ?></th>
   </tr>
   <tr class="tuning">
     <th class="info_head_dark top_border">Тюнинг</th>
@@ -104,25 +108,42 @@ function rc_perc_chg($chg_param, $basic_param) {
   </thead>
   <tbody>
   <tr class="leistung">
-    <td class="dark top_border"><?= $all_data[ 0 ][ 'power' ] ?> kW</td>
-    <td class="dark top_border inside sep">+ <?= rc_perc_chg( $all_data[ 0 ][ 'power' ], $all_data[ 'power' ])?>%</td>
+    <td class="dark top_border"><?=$racechips[ 0 ][ 'kw' ] ?> кВт</td>
+    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'kw_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?= rc_ps( $all_data[ 0 ][ 'power' ]); ?> PS</td>
-    <td class="dark top_border inside sep">+ <?= rc_perc_chg( $all_data[ 0 ][ 'power' ], $all_data[ 'power' ])?>%</td>
+    <td class="dark top_border"><?=$racechips[ 0 ][ 'ps' ] ?> л.с.</td>
+    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'ps_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?= $all_data[ 0 ][ 'torque' ] ?> Nm</td>
-    <td class="dark top_border inside sep">+ <?= rc_perc_chg( $all_data[ 0 ][ 'torque' ],  $all_data[ 'torque' ] ); ?>%</td>
+    <td class="dark top_border"><?=$racechips[ 0 ][ 'nm' ] ?> Нм</td>
+    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'nm_percent' ] ?>%</td>
   </tr>
   <tr class="tuning">
     <td class="info_head_dark top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
   </tr>
+  <?php if($graph == 1): ?>
+  <tr class="performance-graph">
+      <td class="dark sep" colspan="2">
+          <?php
+          $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 0 ][ 'img' ];
+          if($racechips[ 0 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
+              <div class="figure">
+                  График прироста мощности:
+                  <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
+                      <img  height="145"
+                            title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>"
+                            alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>"
+                            src="<?=$file ?>"/>
+                  </a>
+              </div>
+          <?php endif; ?>
+      </td>
+  </tr>
+  <?php endif; ?>
   <tr class="price">
     <td class="dark sep" colspan="2">
-      <p onclick="showCalculator();" class="price">
-        <span id="europrice"><?= $all_data[ 'price_standart' ] . '' . $all_data[ 'currency' ]; ?></span>
-        <!--<img title=" Calculate now! " alt="" src="http://media.racechip.de/images/chiptuning/details/currency-converter-open.png"/>--></p>
+      <p class="price"><?=$racechips[ 0 ][ 'price_ua' ] . $currency?></p>
       <br />
       <p class="vat">включая НДС</p>
       <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>
@@ -132,7 +153,7 @@ function rc_perc_chg($chg_param, $basic_param) {
   </tr>
   <tr class="warenkorb">
     <td class="dark sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="RaceChip" data-model="<? echo $all_data[ 'vehicle_name' ]; ?>">Заказать</div>
+      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 0 ][ 'title' ]?>" data-model="<?=$full_car_name ?>">Заказать</div>
     </td>
   </tr>
   <tr class="lieferstatus">
@@ -141,7 +162,7 @@ function rc_perc_chg($chg_param, $basic_param) {
   <tr class="product-image">
     <td class="dark sep" colspan="2">
       <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module-full-size.jpg" title="RaceChip">
-        <img width="196" height="144" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.jpg"/></a>
+        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.jpg"/></a>
     </td>
   </tr>
   <tr class="specs">
@@ -177,9 +198,9 @@ function rc_perc_chg($chg_param, $basic_param) {
   <thead>
   <tr class="head">
     <th colspan="2" class="dark sep">
-      <a title="RaceChip" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Pro2" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Pro2">
-      </a>RaceChip Pro2</th>
+      <a title="<?=$racechips[ 1 ][ 'title' ] ?>" href="#"  class="performancechart-icon">
+        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name  . ' ' . $racechips[ 1 ][ 'title' ]?>" alt="<?=$full_car_name  . ' ' . $racechips[ 1 ][ 'title' ]?>">
+      </a><?=$racechips[ 1 ][ 'title' ] ?></th>
   </tr>
   <tr class="tuning">
     <th class="info_head_dark top_border">Тюнинг</th>
@@ -188,25 +209,43 @@ function rc_perc_chg($chg_param, $basic_param) {
   </thead>
   <tbody>
   <tr class="leistung">
-    <td class="dark top_border"><?= $all_data[ 1 ][ 'power' ] ?> kW</td>
-    <td class="dark top_border inside sep"> + <?= rc_perc_chg($all_data[ 1 ][ 'power' ], $all_data[ 'power' ]); ?>%</td>
+      <td class="dark top_border"><?=$racechips[ 1 ][ 'kw' ] ?> кВт</td>
+      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'kw_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?= rc_ps( $all_data[ 1 ][ 'power' ]); ?> PS</td>
-    <td class="dark top_border inside sep"> + <?= rc_perc_chg($all_data[ 1 ][ 'power' ], $all_data[ 'power' ]); ?>%</td>
+      <td class="dark top_border"><?=$racechips[ 1 ][ 'ps' ] ?> л.с.</td>
+      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'ps_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?= $all_data[ 1 ][ 'torque' ] ?> Nm</td>
-    <td class="dark top_border inside sep">+ <?= rc_perc_chg( $all_data[ 1 ][ 'torque' ], $all_data[ 'torque' ]); ?>%</td>
+      <td class="dark top_border"><?=$racechips[ 1 ][ 'nm' ] ?> Нм</td>
+      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'nm_percent' ] ?>%</td>
   </tr>
   <tr class="tuning">
     <td class="info_head_dark top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
   </tr>
+  <?php if($graph == 1): ?>
+  <tr class="performance-graph">
+      <td class="dark sep" colspan="2">
+          <?php
+          $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 1 ][ 'img' ];
+          if($racechips[ 1 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
+              <div class="figure">
+                  График прироста мощности:
+                  <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
+                      <img  height="145"
+                            title="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>"
+                            alt="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>"
+                            src="<?=$file ?>"/>
+                  </a>
+              </div>
+          <?php endif; ?>
+      </td>
+  </tr>
+  <?php endif; ?>
   <tr class="price">
     <td class="dark sep" colspan="2">
-      <p onclick="showCalculator();" class="price"><span id="europrice1"><?= $all_data[ 'price_pro' ] . ''; ?></span><?= $all_data[ 'currency' ]; ?>
-        <!-- <img title=" Calculate now! " alt=""  src="http://media.racechip.de/images/chiptuning/details/currency-converter-open.png"/>-->
-      </p>
+      <p class="price"><?= $racechips[ 1 ][ 'price_ua' ] . $currency ?></p>
+
       <br />
       <p class="vat">включая НДС</p>
       <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>Стоимость пересылки в другие страны: <a href="/shipping-and-payment/">здесь</a></p>
@@ -214,7 +253,7 @@ function rc_perc_chg($chg_param, $basic_param) {
   </tr>
   <tr class="warenkorb">
     <td class="dark sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="RaceChip Pro2" data-model="<? echo $all_data[ 'vehicle_name' ]; ?>">Заказать</div>
+      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 1 ][ 'title' ] ?>" data-model="<?=$full_car_name ?>">Заказать</div>
     </td>
   </tr>
   <tr class="lieferstatus">
@@ -223,7 +262,7 @@ function rc_perc_chg($chg_param, $basic_param) {
   <tr class="product-image">
     <td class="dark sep" colspan="2">
       <a rel="lytebox[racechip-pro2]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module-full-size.jpg" title="RaceChip Pro2">
-        <img width="196" height="144" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Pro2" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Pro2" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.jpg"/>
+        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.jpg"/>
       </a>
     </td>
   </tr>
@@ -260,9 +299,9 @@ function rc_perc_chg($chg_param, $basic_param) {
   <thead>
   <tr class="head">
     <th colspan="2" class="light sep">
-      <a title="RaceChip" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate">
-      </a>RaceChip CR Ultimate</th>
+      <a title="<?=$racechips[ 2 ][ 'title' ] ?>" href="#"  class="performancechart-icon">
+        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>">
+      </a><?=$racechips[ 2 ][ 'title' ] ?></th>
   </tr>
   <tr class="tuning">
     <th class="info_head_light top_border">Тюнинг</th>
@@ -271,25 +310,42 @@ function rc_perc_chg($chg_param, $basic_param) {
   </thead>
   <tbody>
   <tr class="leistung">
-    <td class="light top_border"><?= $all_data[ 2 ][ 'power' ] ?> kW</td>
-    <td class="light top_border inside sep"> + <?=rc_perc_chg($all_data[ 2 ][ 'power' ], $all_data[ 'power' ]); ?>%</td>
+    <td class="light top_border"><?=$racechips[ 2 ][ 'kw' ] ?> кВт</td>
+    <td class="light top_border inside sep"> + <?=$racechips[ 2 ][ 'kw_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="light top_border"><?= rc_ps( $all_data[ 2 ][ 'power' ] ); ?> PS</td>
-    <td class="light top_border inside sep"> + <?=rc_perc_chg($all_data[ 2 ][ 'power' ], $all_data[ 'power' ]); ?>%</td>
+    <td class="light top_border"><?=$racechips[ 2 ][ 'ps' ] ?> л.с.</td>
+    <td class="light top_border inside sep"> + <?=$racechips[ 2 ][ 'ps_percent' ] ?>%</td>
   </tr>
   <tr class="leistung">
-    <td class="light top_border"><?= $all_data[ 2 ][ 'torque' ] ?> Nm</td>
-    <td class="light top_border inside sep">+ <?= rc_perc_chg($all_data[ 2 ][ 'torque' ], $all_data[ 'torque' ] ); ?>%</td>
+    <td class="light top_border"><?=$racechips[ 2 ][ 'nm' ] ?> Нм</td>
+    <td class="light top_border inside sep">+ <?=$racechips[ 2 ][ 'nm_percent' ] ?>%</td>
   </tr>
   <tr class="tuning">
     <td class="info_head_light top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
   </tr>
+  <?php if($graph == 1): ?>
+  <tr class="performance-graph">
+      <td class="light sep" colspan="2">
+      <?php
+        $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 2 ][ 'img' ];
+        if($racechips[ 2 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
+          <div class="figure">
+              График прироста мощности:
+              <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
+                  <img  height="145"
+                        title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>"
+                        alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>"
+                        src="<?=$file ?>"/>
+              </a>
+          </div>
+      <?php endif; ?>
+      </td>
+  </tr>
+  <?php endif; ?>
   <tr class="price">
     <td class="light sep" colspan="2">
-      <p onclick="showCalculator();" class="price"><span id="europrice2"><?= $all_data[ 'price_ultimate' ] . '' . $all_data[ 'currency' ]; ?></span>
-          <!--<img title=" Calculate now! " alt="" src="http://media.racechip.de/images/chiptuning/details/currency-converter-open.png"/>-->
-      </p>
+      <p class="price"><?=$racechips[ 2 ][ 'price_ua' ]  . $currency ?></p>
       <br />
       <p class="vat">включая НДС</p>
       <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>Стоимость пересылки в другие страны: <a href="/shipping-and-payment/">здесь</a></p>
@@ -297,7 +353,7 @@ function rc_perc_chg($chg_param, $basic_param) {
   </tr>
   <tr class="warenkorb">
     <td class="light sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="RaceChip Ultimate" data-model="<? echo $all_data[ 'vehicle_name' ]; ?>">Заказать</div>
+      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 2 ][ 'title' ]?>" data-model="<?=$full_car_name ?>">Заказать</div>
     </td>
   </tr>
   <tr class="lieferstatus">
@@ -307,7 +363,7 @@ function rc_perc_chg($chg_param, $basic_param) {
     <td class="light sep" colspan="2">
       <a rel="lytebox[rc-ultimate]"
         href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module-full-size.jpg">
-        <img width="196" height="144" title="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate" alt="<? echo $all_data[ 'vehicle_name' ]; ?> RaceChip Ultimate" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
+        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ] ?>" alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
 		<a class="testsieger" href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/">
 			<img  src="<?php bloginfo('template_directory'); ?>/images/test_badges.png" />
 		</a>

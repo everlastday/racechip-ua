@@ -453,15 +453,15 @@ table.details form input.btn_add_to_cart:hover{background-position: right -34px;
 .details .sep {border-right: #16181D 2px solid;}
 .details .info {color: #FFF;}
 .details .head {padding-left: 0px;}
-.details .price .info.head, #details .price .info.head {height: 403px;}
-.details tr.price {height: 128px;}
+.details .price .info.head, #details .price .info.head {height: 415px;}
+/*.details tr.price {height: 128px;}*/
 .details .specs .info.ico {height: 18px;}
 .details .specs .case {height: 60px;}
 .details .info_head_dark {background-color: #494949;color: #FFF;}
 .details .info_head_light {background-color: #616161;color: #FFF;}
 .details .product-image #neuheit-rosette {display: none;position: absolute;margin-left: 8%; margin-top: 0;width: 101px;height: 76px;line-height: 70px;font-weight: bold;text-transform: uppercase;}
-.details .price td, #details .price td {padding-top: 10px;}
-.details p.price {cursor: help;font-size: 25px !important;margin: 0 auto;font-weight: bold;   width: 160px;}
+.details .price td, #details .price td {padding: 10px 0 0;}
+.details p.price {font-size: 25px !important; margin: 0;font-weight: bold; text-align: center;}
 .details p.vat {font-size: 8px;margin: 5px auto 0 auto;font-weight: bold;  width: 160px;}
 .details p.shipping-costs {font-size: 8px;margin: 0 auto;   width: 160px;}
 .details p.shipping-costs a,
@@ -806,7 +806,7 @@ table.rechnung .ust, table.rechnung .menge {width: 55px;text-align: center;}
 .man_list {background:none!important}
 .man_list li a {color:#e9e9e9!important}
 /*************button warenkorb detail***************/
-.warenkorb .button-c2a-l {padding-top:7px!important}
+.warenkorb .button-c2a-l {padding-top:7px!important; margin-top: 12px;}
 /*************button slider***************/
 #output .button-c2a-l {padding-top:5px!important;padding-bottom:5px!important;background:url('images/layout/button_b.png') right 0px no-repeat;height: 23px;}
 #output .button-c2a-l:hover {text-decoration:none!important}
@@ -1862,4 +1862,26 @@ a.testsieger:hover img {
 }
 .rs-review-text a:hover {
     text-decoration: underline;
+}
+tr.performance-graph {
+  height: 202px;
+}
+.performance-graph td {
+    padding: 12px 0 0;
+}
+
+.performance-graph div.figure {
+    text-align: center;
+    font-size: 11px;
+}
+
+.performance-graph a {
+    display: block;
+    margin: 8px auto 16px;
+
+}
+.performance-graph a img {
+    background-color: #FFF;
+    border-radius: 10px;
+    border: 2px solid #000;
 }

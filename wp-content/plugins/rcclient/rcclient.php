@@ -41,34 +41,11 @@ function west_test($test)
 
 function get_chiptuning($car_id = null, $car_name = null)
 {
-    if ( ! empty( $car_id ) && ! empty( $car_name )) {
-        $sql = 'SELECT
-      racechips.box_class,
-      racechips.box_name,
-      racechips.box_qty,
-      racechips.power,
-      racechips.torque,
-      models.name,
-      models.engine
-      FROM racechips
-      LEFT JOIN models ON racechips.model_id=models.id
-
-      WHERE racechips.model_id=' . (int) $car_name;
-        //d($sql);
+        $sql    = 'SELECT id, name FROM rc_vehicles';
         $result = DatabaseHandler::GetAll($sql);
 
         return $result;
-    } elseif ( ! empty( $car_id )) {
-        $sql    = 'SELECT id,name,engine,capacity,power,torque FROM models WHERE vehicle_id=' . (int) $car_id;
-        $result = DatabaseHandler::GetAll($sql);
 
-        return $result;
-    } else {
-        $sql    = 'SELECT id, name FROM vehicles';
-        $result = DatabaseHandler::GetAll($sql);
-
-        return $result;
-    }
 }
 
 function d($value = null, $die = 1)
@@ -97,13 +74,13 @@ function get_price_ru()
     return $result;
 }
 
-function get_models_params($id)
-{
-    $sql = 'SELECT id,name,engine,capacity,power,torque FROM models WHERE id=' . (int) $id;
-    $result = DatabaseHandler::GetAll($sql);
-
-    return $result;
-}
+//function get_models_params($id)
+//{
+//    $sql    = 'SELECT id,name,engine,capacity,power,torque FROM models WHERE id=' . (int) $id;
+//    $result = DatabaseHandler::GetAll($sql);
+//
+//    return $result;
+//}
 
 function count_vehicles()
 {
@@ -126,24 +103,89 @@ function racechip_info($table = 'vehicles', $table_id = 0)
         return null;
     }
 }
+function get_racechips($submodel_id) {
+    if (isset( $submodel_id ) and ! empty( $submodel_id ) and is_int($submodel_id)) {
+        $sql    = "SELECT
+                    rc_submodels.id as submodel_id,
+                    rc_vehicles.name,
+                    rc_models.model,
+                    rc_submodels.submodel,
+                    rc_submodels.engine,
+                    rc_submodels.capacity,
+                    rc_submodels.kw as base_kw,
+                    rc_submodels.ps as base_ps,
+                    rc_submodels.nm as base_nm,
+                    rc_racechips.class,
+                    rc_racechips.kw,
+                    rc_racechips.kw_percent,
+                    rc_racechips.ps,
+                    rc_racechips.ps_percent,
+                    rc_racechips.nm,
+                    rc_racechips.nm_percent,
+                    rc_racechips.img,
+                    rc_racechips.nm_percent,
+                    rc_price.price_ua,
+                    rc_price.price_ru,
+                    rc_price.title
+                    FROM `rc_racechips`
+        LEFT JOIN rc_price ON rc_price.id=rc_racechips.price_id
+        LEFT JOIN rc_submodels ON rc_submodels.id=rc_racechips.submodel_id
+        LEFT JOIN rc_models ON rc_models.id=rc_submodels.model_id
+        LEFT JOIN rc_vehicles ON rc_vehicles.id=rc_submodels.brand_id
+        WHERE rc_racechips.submodel_id = :submodel_id";
+        $result = DatabaseHandler::GetAll($sql, array(':submodel_id' => $submodel_id));
 
-function get_models($car_brend = 'null', $return_id = 0)
+        return $result;
+    }
+
+    return 0;
+}
+
+
+
+
+function get_submodels($brand, $model) {
+    if (isset( $brand ) and ! empty( $brand ) and isset( $model ) and ! empty( $model )) {
+        $sql    = "SELECT
+                    rc_submodels.id as submodel_id,
+                    rc_vehicles.name,
+                    rc_models.model,
+                    rc_submodels.submodel,
+                    rc_submodels.engine,
+                    rc_submodels.capacity,
+                    rc_submodels.kw,
+                    rc_submodels.ps,
+                    rc_submodels.nm
+                    FROM `rc_submodels`
+        LEFT JOIN rc_models ON rc_models.id=rc_submodels.model_id
+        LEFT JOIN rc_vehicles ON rc_vehicles.id=rc_submodels.brand_id
+        WHERE rc_vehicles.name = :brand_name and rc_models.model = :model";
+        $result = DatabaseHandler::GetAll($sql, array(':brand_name' => $brand, ':model' => $model));
+
+        return $result;
+    }
+
+    return 0;
+}
+
+
+
+function get_models($car_brend, $return_id = 0)
 {
-    $model_brends = get_chiptuning();
-    foreach ($model_brends as $k => $v) {
-        //$v['name'] = str_replace(' ', '-', $v['name']);
-        $model_brend[ strtolower($v[ 'name' ]) ] = $v[ 'id' ];
-    }
-    if (isset( $model_brend[ $car_brend ] )) {
-        if ($return_id > 0) {
-            return intval($model_brend[ $car_brend ]);
-        }
-        $model = $model_brend[ $car_brend ];
+    if (isset( $car_brend ) and ! empty( $car_brend )) {
+        $sql    = "SELECT rc_models.id  as model_id,
+                   rc_models.model,
+                   rc_models.brand_id,
+                   rc_vehicles.name
+                    FROM `rc_models`
+        LEFT JOIN rc_vehicles ON rc_vehicles.id=rc_models.brand_id
+        WHERE rc_vehicles.name = :brand_name";
+        $result = DatabaseHandler::GetAll($sql, array(':brand_name' => $car_brend));
 
-        return get_chiptuning($model);
-    } else {
-        return array();
+        return $result;
     }
+
+    return 0;
 }
 
 add_action('wp_footer', 'rc_windows_popup');
@@ -263,7 +305,7 @@ function get_response_main_models($car_brend = null)
             $all_models[ strtolower(trim($data[ 'name' ])) ] = $data[ 'id' ];
         }
         if (isset( $all_models[ $car_brend ] )) {
-            $sql = "SELECT rcontrol_models.id,
+            $sql    = "SELECT rcontrol_models.id,
                            rcontrol_models.model,
                            rcontrol_vehicles.name
                     FROM `rcontrol_models`
@@ -288,10 +330,8 @@ function get_response_data($data = array())
     } else {
         return 0;
     }
-
     if (isset( $data[ 'id' ] ) and ! empty( $data[ 'id' ] )) {
-
-        $sql    = "SELECT rcontrol_models.id  as model_id,
+        $sql = "SELECT rcontrol_models.id  as model_id,
                    rcontrol_models.model,
                    rcontrol_vehicles.name,
                    rcontrol_details.engine,
@@ -306,18 +346,17 @@ function get_response_data($data = array())
         LEFT JOIN rcontrol_models ON rcontrol_details.model_id=rcontrol_models.id
         LEFT JOIN rcontrol_vehicles ON rcontrol_vehicles.id=rcontrol_details.brand_id
         WHERE rcontrol_details.id = :details_id";
-
-
-
         $result = DatabaseHandler::GetAll($sql, array(':details_id' => $details_id));
 
         return $result;
     }
+
     return 0;
 }
+
 function get_response_models($brand_name = null, $model_name = null, $return_id = 0)
 {
-    $sql = "SELECT rcontrol_models.id  as model_id,
+    $sql    = "SELECT rcontrol_models.id  as model_id,
                    rcontrol_models.model,
                    rcontrol_vehicles.name,
                    rcontrol_details.engine,
@@ -374,40 +413,17 @@ add_action('wp_ajax_rc_get_type', 'rcGetTypeAjax');
 add_action('wp_ajax_nopriv_rc_get_type', 'rcGetTypeAjax');
 function rcGetTypeAjax()
 {
-    //global $mydb;
-    //$brand_id = $_POST[ 'brand_id' ] + 0; // забираєм першу букву, щоб залишились тільки цифри
+
     $brand_id = urldecode($_POST[ 'brand_id' ]);
     if (isset( $brand_id )) {
-        $car_brend    = $brand_id;
-        $data_from_db = get_models($car_brend);
-        //d($data_from_db);
-        $table_id = get_models($car_brend, 1);
-        //echo $table_id;
-        $racechip_info = racechip_info('vehicles', $table_id);
-        //d($data_from_db);
-        $model_data      = array();
-        $car_brend_array = explode(' ', $car_brend);
-        foreach ($data_from_db as $k => $v) {
-            $pieces    = explode(" ",
-                $v[ 'name' ]);  // Розділяєм строку типу  -  Toyota Avensis II (T25) 2.0 D-4D на масив слів.
-            $array_key = 1;
-            if (isset( $car_brend_array[ 1 ] )) {
-                $array_key = 2;
-            }  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
-            $array_key2 = $array_key + 1;
-            if ( ! preg_match("/\(|\)/", $pieces[ $array_key2 ]) && ! preg_match("/\d+/",
-                    $pieces[ $array_key2 ]) && strlen(trim($pieces[ $array_key2 ])) > 3
-            ) {
-                $model_data[ trim($pieces[ $array_key ] . ' ' . $pieces[ $array_key2 ]) ][] = $v;
-            } else {
-                $model_data[ trim($pieces[ $array_key ]) ][] = $v;
-            }
-        }
+
+        $model_data =  get_models( $brand_id );
+
         // Sort alphabetical
         $data = '<option value="0">Выберите модель...</option>';
-        foreach ($model_data as $key => $value) {
-            $key2 = $key;
-            $key  = urlencode($key);
+        foreach ($model_data as $value) {
+            $key2 = $value[ 'model' ];
+            $key  = urlencode($value[ 'model' ]);
             $data .= '<option value=' . strtolower($key) . '>' . $key2 . '</option>';
         }
         echo $data;
@@ -426,62 +442,16 @@ function rcGetModelAjax()
     //global $mydb;
     //$brand_id = $_POST[ 'brand_id' ] + 0; // забираєм першу букву, щоб залишились тільки цифри
     $car_type  = urldecode($_POST[ 'brand_id' ]);
-    $car_brend = urldecode($_POST[ 'car_type' ]);
-    if (isset( $car_brend )) {
-        //print 'lol';
-        $models_from_db = get_models($car_brend);
-        $model_data      = array();
-        $car_brend_array = explode(' ', $car_brend);
-        $data_from_db = array();
-        foreach ($models_from_db as $k => $v) {
-            $pieces    = explode(" ", $v[ 'name' ]);
-            $array_key = 1;
-            if (isset( $car_brend_array[ 1 ] )) {
-                $array_key = 2;
-            }  // Якщо назва автомобіля складається з двох слів, то для назв типів автомобілів використовуються інші ключі
-            $array_key2 = $array_key + 1;
-            if ( ! preg_match("/\(|\)/", $pieces[ $array_key2 ]) && ! preg_match("/\d+/",
-                    $pieces[ $array_key2 ]) && strlen(trim($pieces[ $array_key2 ])) > 3
-            ) {
-                $name_from_db = trim($pieces[ $array_key ] . ' ' . $pieces[ $array_key2 ]);
-            } else {
-                $name_from_db = trim($pieces[ $array_key ]);
-            }
-            if (strtolower($name_from_db) == strtolower($car_type)) {
-                $data_from_db[] = $v;
-                //$sss .= $name_from_db . ' - ' . $car_type . ',';
-            }
-        }
-        //d($data_from_db);
-        foreach ($data_from_db as $data) {
-            //print $data['name'];
-            $all_data[ $data[ 'id' ] ][ 'id' ]       = $data[ 'id' ];
-            $all_data[ $data[ 'id' ] ][ 'name' ]     = $data[ 'name' ];
-            $all_data[ $data[ 'id' ] ][ 'engine' ]   = $data[ 'engine' ];
-            $all_data[ $data[ 'id' ] ][ 'capacity' ] = $data[ 'capacity' ];
-            $all_data[ $data[ 'id' ] ][ 'power' ]    = $data[ 'power' ];
-            $all_data[ $data[ 'id' ] ][ 'torque' ]   = $data[ 'torque' ];
-            $all_data[ $data[ 'id' ] ][ 'model' ]    = $car_brend;
-            //$all_data['model_brend'] = preg_replace("/-\d+/", "", $all_data[$data['id']]['model']);
-            $data[ 'original_name' ] = $data[ 'name' ];
-            $data[ 'name' ] = trim(str_ireplace(str_ireplace('-', ' ', $car_brend) . ' ' . $car_type, '',
-                $data[ 'name' ]));
-            $all_data[ $data[ 'id' ] ][ 'name_for_href' ] = preg_replace("/ \/ | /", "-", $data[ 'name' ]);
-            $all_data[ $data[ 'id' ] ][ 'name_for_href' ] = preg_replace("/\//", "+",
-                $all_data[ $data[ 'id' ] ][ 'name_for_href' ]);
-            $all_data[ $data[ 'id' ] ][ 'name_for_href' ] = preg_replace("/>/", "_",
-                $all_data[ $data[ 'id' ] ][ 'name_for_href' ]);
-            $all_data[ $data[ 'id' ] ][ 'name_for_href' ] = preg_replace("/é/", "e",
-                $all_data[ $data[ 'id' ] ][ 'name_for_href' ]);
-            $all_data[ $data[ 'id' ] ][ 'name_for_href' ] = str_replace("´", "",
-                $all_data[ $data[ 'id' ] ][ 'name_for_href' ]);
-        }
-        // d($all_data);
-        // Sort alphabetical
+    $car_brand = urldecode($_POST[ 'car_type' ]);
+    if (isset( $car_brand )) {
+
+        $submodel_data = get_submodels($car_brand, $car_type);
+
+
         $info = '<option value="0">Выберите модификацию...</option>';
-        foreach ($all_data as $id) {
-            $href = get_bloginfo('wpurl') . '/chiptuning/' . urlencode($id[ 'model' ]) . '/' . urlencode($car_type) . '/' . urlencode($id[ 'name_for_href' ]) . '-' . $id[ 'id' ];
-            $info .= '<option value="' . $href . '">' . $id[ 'name' ] . ' ' . $id[ 'capacity' ] . 'cm&sup3' . ' ' . $id[ 'power' ] . 'kW ' . round($id[ 'power' ] * 1.36) . 'PS' . '</option>';
+        foreach ($submodel_data as $id) {
+            $href = get_bloginfo('wpurl') . '/chiptuning/' . urlencode($id[ 'model' ]) . '/' . urlencode($car_type) . '/' . urlencode($id[ 'submodel' ]) . '-' . $id[ 'submodel_id' ];
+            $info .= '<option value="' . $href . '">' . $id[ 'submodel' ] . ' ' . $id[ 'capacity' ] . ' см&sup3' . ' ' . $id[ 'kw' ] . ' кВт ' . $id[ 'ps' ] . ' л.с.' . '</option>';
         }
         echo $info;
         wp_die();
