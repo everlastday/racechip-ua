@@ -26,6 +26,7 @@
 
         $submodel_id = (int) $ok[ 1 ];
         $racechips = get_racechips($submodel_id);
+
         $currency = ' €';
 
           //d($racechips);
@@ -33,13 +34,13 @@
         $count_racechips = count($racechips);
 
           //d($racechips);
-        if($count_racechips == 3) {
+        //if($count_racechips == 3) {
             require_once 'chiptuning-car-details.php';
-        } else {
-            if($racechips[0]['title'] == 'RaceChip Ultimate') require_once 'chiptuning-car-details2.php';
-            elseif($racechips[0]['title'] == 'RaceChip One') require_once 'chiptuning-car-details-pd.php';
-            else echo 'Unknown template';
-        }
+        //} else {
+        //    if($racechips[0]['title'] == 'Ultimate') require_once 'chiptuning-car-details2.php';
+        //    elseif($racechips[0]['title'] == 'One') require_once 'chiptuning-car-details-pd.php';
+        //    else echo 'Unknown template';
+        //}
 
 
 //          echo $count_racechips;

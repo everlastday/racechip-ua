@@ -396,6 +396,19 @@ function get_response_models($brand_name = null, $model_name = null, $return_id 
     //}
 }
 
+
+function get_graph_images($brand_name = null, $model_name = null, $submodel_name = null)
+{
+    $sql    = "SELECT kw,ps, nm, img
+              FROM  `graph_images`
+        WHERE name = :brand_name and model = :model_name and submodel = :submodel_name";
+    return DatabaseHandler::GetAll($sql, array(':brand_name' => $brand_name, ':model_name' => $model_name, ':submodel_name' => $submodel_name));
+
+}
+
+
+
+
 // Функции для подбора авто на главной
 function get_vehicles_input()
 {

@@ -9,10 +9,29 @@
         $model = isset( $racechips[ 0 ][ 'model' ] ) ? $racechips[ 0 ][ 'model' ] : 'Model';
         $submodel = isset( $racechips[ 0 ][ 'submodel' ] ) ? $racechips[ 0 ][ 'submodel' ] : 'Submodel';
 
+
+        $images_info = get_graph_images($racechips[ 0 ][ 'name' ], $racechips[ 0 ][ 'model' ], $racechips[ 0 ][ 'submodel' ]);
+
+    //d($images);
+
         $full_car_name = $brand . ' ' . $model . ' ' . $submodel;
         $graph = 0;
 
-        if($racechips[ 0 ][ 'img' ]  != '-' or $racechips[ 1 ][ 'img' ]  != '-' or $racechips[ 2 ][ 'img' ]  != '-')  $graph = 1;
+        if(!empty($images_info)) {
+
+            $graph_images = array();
+            foreach($images_info as $image) {
+                $graph_images[$image['ps'] . '-' . $image['nm']] = $image['img'];
+            }
+
+            if(isset($racechips[ 1 ][ 'ps' ]) and isset($racechips[ 1 ][ 'nm' ]) and isset($graph_images[$racechips[ 1 ][ 'ps' ] . '-' . $racechips[ 1 ][ 'nm' ]]) )
+                $graph = 1;
+
+        }
+
+        //d($graph_images);
+
+
 
     ?>
     <a href="<?php echo get_bloginfo('wpurl'); ?>/chiptuning/">Выбор автомобиля</a> &gt;
@@ -93,57 +112,75 @@
   </tr>
   </tbody>
 </table>
+
+    <? foreach ($racechips as $k => $racechip):
+
+            $theme = 'dark';
+            if($racechip[ 'title' ] == 'Ultimate') $theme = 'light';
+        ?>
+
+
 <table class="details">
   <thead>
   <tr class="head">
-    <th colspan="2" class="dark sep">
+    <th colspan="2" class="<?=$theme?> sep">
       <a title="RaceChip" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?> ">
-      </a><?=$racechips[ 0 ][ 'title' ] ?></th>
+        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?> ">
+      </a>RaceChip <?=$racechip[ 'title' ] ?></th>
   </tr>
   <tr class="tuning">
-    <th class="info_head_dark top_border">Тюнинг</th>
-    <th class="info_head_dark top_border inside sep">Изменения</th>
+    <th class="info_head_<?=$theme?> top_border">Тюнинг</th>
+    <th class="info_head_<?=$theme?> top_border inside sep">Изменения</th>
   </tr>
   </thead>
   <tbody>
   <tr class="leistung">
-    <td class="dark top_border"><?=$racechips[ 0 ][ 'kw' ] ?> кВт</td>
-    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'kw_percent' ] ?>%</td>
+    <td class="<?=$theme?> top_border"><?=$racechip[ 'kw' ] ?> кВт</td>
+    <td class="<?=$theme?> top_border inside sep">+ <?=$racechip[ 'kw_percent' ] ?> кВт</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?=$racechips[ 0 ][ 'ps' ] ?> л.с.</td>
-    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'ps_percent' ] ?>%</td>
+    <td class="<?=$theme?> top_border"><?=$racechip[ 'ps' ] ?> л.с.</td>
+    <td class="<?=$theme?> top_border inside sep">+ <?=$racechip[ 'ps_percent' ] ?> л.с.</td>
   </tr>
   <tr class="leistung">
-    <td class="dark top_border"><?=$racechips[ 0 ][ 'nm' ] ?> Нм</td>
-    <td class="dark top_border inside sep">+ <?=$racechips[ 0 ][ 'nm_percent' ] ?>%</td>
+    <td class="<?=$theme?> top_border"><?=$racechip[ 'nm' ] ?> Нм</td>
+    <td class="<?=$theme?> top_border inside sep">+ <?=$racechip[ 'nm_percent' ] ?> Нм</td>
   </tr>
   <tr class="tuning">
-    <td class="info_head_dark top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
+    <td class="info_head_<?=$theme?> top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
   </tr>
   <?php if($graph == 1): ?>
   <tr class="performance-graph">
-      <td class="dark sep" colspan="2">
+      <td class="<?=$theme?> sep" colspan="2">
           <?php
-          $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 0 ][ 'img' ];
-          if($racechips[ 0 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
-              <div class="figure">
-                  График прироста мощности:
-                  <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
-                      <img  height="145"
-                            title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>"
-                            alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>"
-                            src="<?=$file ?>"/>
-                  </a>
-              </div>
-          <?php endif; ?>
+
+          if(isset($graph_images[$racechip[ 'ps' ] . '-' . $racechip[ 'nm' ]]) ) {
+              $file = get_template_directory_uri() .'/images/graph/' . $graph_images[$racechip[ 'ps' ] . '-' . $racechip[ 'nm' ]];
+
+              if(@fopen($file , "r")): ?>
+                  <div class="figure">
+                      График прироста мощности:
+                      <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
+                          <img  height="145"
+                                title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>"
+                                alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>"
+                                src="<?=$file ?>"/>
+                      </a>
+                  </div>
+              <?php endif;
+
+
+          } ?>
+
+
+
+
       </td>
   </tr>
   <?php endif; ?>
   <tr class="price">
-    <td class="dark sep" colspan="2">
-      <p class="price"><?=$racechips[ 0 ][ 'price_ua' ] . $currency?></p>
+    <td class="<?=$theme?> sep" colspan="2">
+      <p class="price"><?=$racechip[ 'price_ua' ] . $currency?></p>
       <br />
       <p class="vat">включая НДС</p>
       <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>
@@ -152,252 +189,121 @@
     </td>
   </tr>
   <tr class="warenkorb">
-    <td class="dark sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 0 ][ 'title' ]?>" data-model="<?=$full_car_name ?>">Заказать</div>
+    <td class="<?=$theme?> sep" colspan="2">
+      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechip[ 'title' ]?>" data-model="<?=$full_car_name ?>">Заказать</div>
     </td>
   </tr>
   <tr class="lieferstatus">
-    <td class="dark stock sep" colspan="2"><span class="bullet green"> </span> Доступен на складе </td>
+    <td class="<?=$theme?> stock sep" colspan="2"><span class="bullet green"> </span> Доступен на складе </td>
   </tr>
   <tr class="product-image">
-    <td class="dark sep" colspan="2">
-      <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module-full-size.jpg" title="RaceChip">
-        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 0 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.jpg"/></a>
-    </td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark bottom_border sep"></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">ST62 (8MHz)</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">8bit</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">12 Млн. / сек</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">Sub-D</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep case"><span>Алюминиевый</span></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">7,4 см × 6,3 см × 3,4 см</td>
-  </tr>
-  <tr class="specs" id="legal-tr">
-    <td colspan="2" class="dark top_border sep"><span id="laws_link_1">&nbsp;</td>
-  </tr>
-  </tbody>
-</table>
-<table class="details">
-  <thead>
-  <tr class="head">
-    <th colspan="2" class="dark sep">
-      <a title="<?=$racechips[ 1 ][ 'title' ] ?>" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name  . ' ' . $racechips[ 1 ][ 'title' ]?>" alt="<?=$full_car_name  . ' ' . $racechips[ 1 ][ 'title' ]?>">
-      </a><?=$racechips[ 1 ][ 'title' ] ?></th>
-  </tr>
-  <tr class="tuning">
-    <th class="info_head_dark top_border">Тюнинг</th>
-    <th class="info_head_dark top_border inside sep">Изменения</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="leistung">
-      <td class="dark top_border"><?=$racechips[ 1 ][ 'kw' ] ?> кВт</td>
-      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'kw_percent' ] ?>%</td>
-  </tr>
-  <tr class="leistung">
-      <td class="dark top_border"><?=$racechips[ 1 ][ 'ps' ] ?> л.с.</td>
-      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'ps_percent' ] ?>%</td>
-  </tr>
-  <tr class="leistung">
-      <td class="dark top_border"><?=$racechips[ 1 ][ 'nm' ] ?> Нм</td>
-      <td class="dark top_border inside sep">+ <?=$racechips[ 1 ][ 'nm_percent' ] ?>%</td>
-  </tr>
-  <tr class="tuning">
-    <td class="info_head_dark top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
-  </tr>
-  <?php if($graph == 1): ?>
-  <tr class="performance-graph">
-      <td class="dark sep" colspan="2">
-          <?php
-          $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 1 ][ 'img' ];
-          if($racechips[ 1 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
-              <div class="figure">
-                  График прироста мощности:
-                  <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
-                      <img  height="145"
-                            title="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>"
-                            alt="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>"
-                            src="<?=$file ?>"/>
-                  </a>
-              </div>
-          <?php endif; ?>
-      </td>
-  </tr>
-  <?php endif; ?>
-  <tr class="price">
-    <td class="dark sep" colspan="2">
-      <p class="price"><?= $racechips[ 1 ][ 'price_ua' ] . $currency ?></p>
-
-      <br />
-      <p class="vat">включая НДС</p>
-      <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>Стоимость пересылки в другие страны: <a href="/shipping-and-payment/">здесь</a></p>
-    </td>
-  </tr>
-  <tr class="warenkorb">
-    <td class="dark sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 1 ][ 'title' ] ?>" data-model="<?=$full_car_name ?>">Заказать</div>
-    </td>
-  </tr>
-  <tr class="lieferstatus">
-    <td class="dark stock sep" colspan="2"><span class="bullet green"> </span> Доступен на складе</td>
-  </tr>
-  <tr class="product-image">
-    <td class="dark sep" colspan="2">
-      <a rel="lytebox[racechip-pro2]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module-full-size.jpg" title="RaceChip Pro2">
-        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 1 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.jpg"/>
-      </a>
-    </td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark bottom_border sep"></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">STM8 (24Mhz)</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">8bit</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">24 Млн. / сек</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">FCI Automotive</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep case"><span>Термостойкий, армированный стекловолокном пластик, водонепроницаемый</span></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="dark sep">9,2 см × 10,4 см × 3,6 см</td>
-  </tr>
-  <tr class="specs" id="legal-tr">
-    <td colspan="2" class="dark top_border sep">&nbsp;</td>
-  </tr>
-  </tbody>
-</table>
-<table class="details">
-  <thead>
-  <tr class="head">
-    <th colspan="2" class="light sep">
-      <a title="<?=$racechips[ 2 ][ 'title' ] ?>" href="#"  class="performancechart-icon">
-        <img src="<?php bloginfo('template_directory'); ?>/images/chiptuning/performancechart-icon.png" title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>">
-      </a><?=$racechips[ 2 ][ 'title' ] ?></th>
-  </tr>
-  <tr class="tuning">
-    <th class="info_head_light top_border">Тюнинг</th>
-    <th class="info_head_light top_border inside sep">Изменения</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="leistung">
-    <td class="light top_border"><?=$racechips[ 2 ][ 'kw' ] ?> кВт</td>
-    <td class="light top_border inside sep"> + <?=$racechips[ 2 ][ 'kw_percent' ] ?>%</td>
-  </tr>
-  <tr class="leistung">
-    <td class="light top_border"><?=$racechips[ 2 ][ 'ps' ] ?> л.с.</td>
-    <td class="light top_border inside sep"> + <?=$racechips[ 2 ][ 'ps_percent' ] ?>%</td>
-  </tr>
-  <tr class="leistung">
-    <td class="light top_border"><?=$racechips[ 2 ][ 'nm' ] ?> Нм</td>
-    <td class="light top_border inside sep">+ <?=$racechips[ 2 ][ 'nm_percent' ] ?>%</td>
-  </tr>
-  <tr class="tuning">
-    <td class="info_head_light top_border bottom_border sep" colspan="2">до 1л / 100 км</td>
-  </tr>
-  <?php if($graph == 1): ?>
-  <tr class="performance-graph">
-      <td class="light sep" colspan="2">
-      <?php
-        $file = get_template_directory_uri() .'/images/graph/' . $racechips[ 2 ][ 'img' ];
-        if($racechips[ 2 ][ 'img' ]  != '-' and @fopen($file , "r")): ?>
-          <div class="figure">
-              График прироста мощности:
-              <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
-                  <img  height="145"
-                        title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>"
-                        alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>"
-                        src="<?=$file ?>"/>
-              </a>
-          </div>
-      <?php endif; ?>
-      </td>
-  </tr>
-  <?php endif; ?>
-  <tr class="price">
-    <td class="light sep" colspan="2">
-      <p class="price"><?=$racechips[ 2 ][ 'price_ua' ]  . $currency ?></p>
-      <br />
-      <p class="vat">включая НДС</p>
-      <p class="shipping-costs">Бесплатная доставка по всему СНГ<br/>Стоимость пересылки в другие страны: <a href="/shipping-and-payment/">здесь</a></p>
-    </td>
-  </tr>
-  <tr class="warenkorb">
-    <td class="light sep" colspan="2">
-      <div class="button-c2a-l online-message-btn" data-chip="<?=$racechips[ 2 ][ 'title' ]?>" data-model="<?=$full_car_name ?>">Заказать</div>
-    </td>
-  </tr>
-  <tr class="lieferstatus">
-    <td class="light stock sep" colspan="2"><span class="bullet green"> </span> Доступен на складе</td>
-  </tr>
-  <tr class="product-image">
-    <td class="light sep" colspan="2">
-      <a rel="lytebox[rc-ultimate]"
-        href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module-full-size.jpg">
-        <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ] ?>" alt="<?=$full_car_name . ' ' . $racechips[ 2 ][ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
-		<a class="testsieger" href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/">
-			<img  src="<?php bloginfo('template_directory'); ?>/images/test_badges.png" />
-		</a>
-
+    <td class="<?=$theme?> sep" colspan="2">
+        <?php if($racechip['title'] == 'Pro 2') { ?>
+        <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.jpg"/></a>
+        <?php } elseif($racechip['title'] == 'Ultimate') { ?>
+            <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
+            <a class="testsieger" href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/">
+                <img  src="<?php bloginfo('template_directory'); ?>/images/test_badges.png" />
+            </a>
+        <?php } else { ?>
+            <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.jpg"/></a>
+        <?php }  ?>
 
     </td>
   </tr>
-  <tr class="specs">
-    <td colspan="2" class="light bottom_border sep"></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep"><span class="keyfeatures">ARM Cortex III ™ (48MHz)</span></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep">32bit</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep">48 Млн. / сек</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep">FCI Automotive</td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep case"><span>Термостойкий, армированный стекловолокном пластик</span></td>
-  </tr>
-  <tr class="specs">
-    <td colspan="2" class="light sep">11,5 см × 10,0 см × 4,0 см</td>
-  </tr>
-  <tr class="specs" id="legal-tr">
-    <td colspan="2" class="light top_border sep">&nbsp;</td>
-  </tr>
+
+  <?php if($racechip['title'] == 'Pro 2') { ?>
+      <tr class="specs">
+          <td colspan="2" class="dark bottom_border sep"></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">STM8 (24Mhz)</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">8bit</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">24 Млн. / сек</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">FCI Automotive</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep case"><span>Термостойкий, армированный стекловолокном пластик, водонепроницаемый</span></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">9,2 см × 10,4 см × 3,6 см</td>
+      </tr>
+      <tr class="specs" id="legal-tr">
+          <td colspan="2" class="dark top_border sep">&nbsp;</td>
+      </tr>
+  <?php } elseif($racechip['title'] == 'Ultimate') { ?>
+      <tr class="specs">
+          <td colspan="2" class="light bottom_border sep"></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep"><span class="keyfeatures">ARM Cortex III ™ (48MHz)</span></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep">32bit</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep">48 Млн. / сек</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep">FCI Automotive</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep case"><span>Термостойкий, армированный стекловолокном пластик</span></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="light sep">11,5 см × 10,0 см × 4,0 см</td>
+      </tr>
+      <tr class="specs" id="legal-tr">
+          <td colspan="2" class="light top_border sep">&nbsp;</td>
+      </tr>
+  <?php } else { ?>
+      <tr class="specs">
+          <td colspan="2" class="dark bottom_border sep"></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">ST62 (8MHz)</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">8bit</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">12 Млн. / сек</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep"><img width="16" height="16" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/yea.png" alt="Да" title="Да" /></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">Sub-D</td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep case"><span>Алюминиевый</span></td>
+      </tr>
+      <tr class="specs">
+          <td colspan="2" class="dark sep">7,4 см × 6,3 см × 3,4 см</td>
+      </tr>
+      <tr class="specs" id="legal-tr">
+          <td colspan="2" class="dark top_border sep"><span id="laws_link_1">&nbsp;</td>
+      </tr>
+  <?php }  ?>
+
   </tbody>
 </table>
+
+
+<? endforeach; ?>
 </div>
