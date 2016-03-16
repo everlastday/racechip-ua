@@ -13,14 +13,14 @@
         </div>
 
         <h2><?=$model?></h2>
-      <!--<span>-->
-      <!--<ul id="filter" style="display: none;">-->
-      <!--    <li style="display: inline;">Двигатель:</li>-->
-      <!--    <li style="display: inline; cursor: pointer;" id="filter_all">Все</li>-->
-      <!--    <li style="display: inline; cursor: pointer;" id="filter_diesel">Дизель</li>-->
-      <!--    <li style="display: inline; cursor: pointer;" id="filter_petrol">Бензин</li>-->
-      <!--</ul>-->
-      <!--</span>-->
+      <span>
+      <ul id="filter" style="display: none;">
+          <li style="display: inline;">Двигатель:</li>
+          <li style="display: inline; cursor: pointer;" id="filter_all">Все</li>
+          <li style="display: inline; cursor: pointer;" id="filter_diesel">Дизель</li>
+          <li style="display: inline; cursor: pointer;" id="filter_petrol">Бензин</li>
+      </ul>
+      </span>
         <div id="model_selection">
             <table>
                 <thead>
