@@ -463,7 +463,7 @@ function rcGetModelAjax()
 
         $info = '<option value="0">Выберите модификацию...</option>';
         foreach ($submodel_data as $id) {
-            $href = get_bloginfo('wpurl') . '/chiptuning/' . urlencode($id[ 'model' ]) . '/' . urlencode($car_type) . '/' . urlencode($id[ 'submodel' ]) . '-' . $id[ 'submodel_id' ];
+            $href = get_bloginfo('wpurl') . '/chiptuning/' . strtolower(urlencode($id['name'])) . '/' . strtolower(urlencode($id[ 'model' ])) . '/' . urlencode($id[ 'submodel' ]) . '-' . $id[ 'submodel_id' ];
             $info .= '<option value="' . $href . '">' . $id[ 'submodel' ] . ' ' . $id[ 'capacity' ] . ' см&sup3' . ' ' . $id[ 'kw' ] . ' кВт ' . $id[ 'ps' ] . ' л.с.' . '</option>';
         }
         echo $info;
