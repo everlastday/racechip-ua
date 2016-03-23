@@ -1819,6 +1819,7 @@ a.testsieger:hover img {
 }
 
 .reviews-menu {
+    display: none;
     position: absolute;
     right: 100px;
     top:231px;
@@ -1884,4 +1885,9 @@ tr.performance-graph {
     background-color: #FFF;
     border-radius: 10px;
     border: 2px solid #000;
+}
+@media screen and (min-width: 1900px) {
+    .reviews-menu.ps-container {
+        display: block;
+    }
 }
