@@ -1,0 +1,10 @@
+.window_popup { border-radius: 5px; width: 320px; position: fixed; top: 5%; background: #333538; box-shadow: 4px 4px 19px -7px black; -moz-box-shadow: 4px 4px 19px -7px #000000; -webkit-box-shadow: 4px 4px 19px -7px black; -webkit-transition: all 0.3s linear; -moz-transition: all 0.3s linear; -o-transition: all 0.3s linear; -ms-transition: all 0.3s linear; z-index: 10000; left: -350px; }
+.window_popup form { padding: 12px 1px 12px 1px; text-align: center; }
+.window_popup form .success { color: #fff; margin-bottom: 10px; }
+.window_popup form input[type=text] { border-radius: 5px; background: #fff; width: 250px; display: inline-block; padding-left: 10px; padding-right: 10px; height: 20px; line-height: 20px; border: 1px solid #CCC; margin-bottom: 4px; font-family: 'PT Sans'; }
+.window_popup input[type=text].error { border: 1px solid #ff0000; }
+.window_popup input[type=submit] { border-radius: 5px; margin-top: 2px; text-align: center; padding:5px 20px 20px; !important; cursor: pointer; border: 0; background-color: #ED8106; color: #FFF; font-weight: bold; }
+.window_popup form textarea, .form textarea { border-radius: 5px; width: 250px; background: #fff; height: 35px; border: none; padding-left: 11px; padding-right: 11px; font-family: 'PT Sans'; }
+.window_popup form textarea.error { border: 1px solid #ff0000; }
+.window_popup .x { border-radius: 2px; display: block; position: absolute; width: 24px; height: 24px; right: -8px; top: -8px; background-color: #ED8106; font-size: 1.2em; padding: 1px; text-align: center;}
+.window_popup .x:hover { cursor: pointer; }

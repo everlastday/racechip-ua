@@ -1,10 +1,10 @@
 === Metro Style Social Widget ===
 Contributors: Manivannan M
-Donate link: http://www.howopensource.com/metro-style-social-widget-wordpress
+Donate link: http://www.aidful.com/metro-style-social-widget-wordpress
 Tags: metro social widget, specificfeeds, facebook, twitter, google, google+, linkedin, rss, youtube, metro, metro style, pinterest
 Requires at least: 2.5
-Tested up to: 3.8.1
-Stable tag: 0.9.10
+Tested up to: 4.5.3
+Stable tag: 1.0.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,8 @@ Add button option will display the Like / Follow button on the Social icons so t
 Since every one use Facebook and Twitter, we made them as default and other network as optional.
 
 = Update =
+
+Color Picker added, Now you can set any color to any icons in the widget.
 
 On Users request Google+ and RSS Feed are now optional.
 
@@ -36,8 +38,8 @@ Responsive design, Plugin will automatically fit within your siderbar width else
 
 = Support / Contact =
 
-* [More Info / DEMO](http://www.howopensource.com/metro-style-social-widget-wordpress "More info about Metro Style Social Widget plugin")
-* [Developer Blog: HowOpenSource.com](http://www.howopensource.com "Contact at HowOpenSource.com")
+* [More Info / DEMO](http://www.aidful.com/metro-style-social-widget-wordpress "More info about Metro Style Social Widget plugin")
+* [Developer Blog: Aidful.com](http://www.aidful.com "Contact at Aidful.com")
 
 = Sponsors =
 
@@ -59,27 +61,38 @@ If you like this plug-in, please don't forget to rate this plugin.
 
 == Screenshots ==
 
-1. Display all supported social network profiles
+1. Easy Configuration
 
-2. Display without youtube
+2. Display all supported social network profiles
 
-3. Display without youtube and linkedin
+3. Display without youtube
 
-4. Display without youtube, linkedin and Pinterest
+4. Display without youtube and linkedin
 
-5. Display without linkedin and Pinterest
+5. Display without youtube, linkedin and Pinterest
 
-6. Display without Pinterest
+6. Display without linkedin and Pinterest
 
-7. Display without linkedin
+7. Display without Pinterest
 
-8. Display without youtube and Pinterest
+8. Display without linkedin
+
+9. Display without youtube and Pinterest
 
 == Frequently Asked Questions ==
 
 *COMING SOON
 
 == Changelog ==
+= 1.0.2 =
+*Moved all the screenshot files to assets, Reduced plugin file size.
+
+= 1.0.1 =
+*New Widget settings & added color picker to it.
+
+= 0.9.15 =
+*Fixed bug & updated to support 4.5.2
+
 = 0.9.10 =
 *Added SpecificFeeds option to the plugin.
 

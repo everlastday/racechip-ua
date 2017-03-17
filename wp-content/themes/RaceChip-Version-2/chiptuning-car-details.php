@@ -19,6 +19,8 @@
 
         if(!empty($images_info)) {
 
+
+
             $graph_images = array();
             foreach($images_info as $image) {
                 $graph_images[$image['ps'] . '-' . $image['nm']] = $image['img'];
@@ -113,7 +115,7 @@
   </tbody>
 </table>
 
-    <? foreach ($racechips as $k => $racechip):
+	<? foreach ($racechips as $k => $racechip):
 
             $theme = 'dark';
             if($racechip[ 'title' ] == 'Ultimate') $theme = 'light';
@@ -157,7 +159,9 @@
           if(isset($graph_images[$racechip[ 'ps' ] . '-' . $racechip[ 'nm' ]]) ) {
               $file = get_template_directory_uri() .'/images/graph/' . $graph_images[$racechip[ 'ps' ] . '-' . $racechip[ 'nm' ]];
 
-              if(@fopen($file , "r")): ?>
+	          $file_root_path = get_theme_root( ) . '/' . get_template() . '/images/graph/' . $graph_images[$racechip[ 'ps' ] . '-' . $racechip[ 'nm' ]];
+
+              if(file_exists($file_root_path)): ?>
                   <div class="figure">
                       График прироста мощности:
                       <a rel="lytebox[graph]" href="<?=$file ?>" data-lightbox="graph">
@@ -200,16 +204,16 @@
     <td class="<?=$theme?> sep" colspan="2">
         <?php if($racechip['title'] == 'Pro 2') { ?>
         <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
-            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.jpg"/></a>
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-pro2-module.png"/></a>
         <?php } elseif($racechip['title'] == 'Ultimate') { ?>
             <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
-            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.jpg"/></a>
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-ultimate-module.png"/></a>
             <a class="testsieger" href="<?php echo get_bloginfo( 'wpurl' ); ?>/racechip-won-the-comparison-test/">
                 <img  src="<?php bloginfo('template_directory'); ?>/images/test_badges.png" />
             </a>
         <?php } else { ?>
             <a rel="lytebox[racechip]" href="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module-full-size.jpg" title="RaceChip <?=$racechip[ 'title' ]?>">
-            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.jpg"/></a>
+            <img width="196" height="144" title="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" alt="<?=$full_car_name . ' ' . $racechip[ 'title' ]?>" src="<?php bloginfo('template_directory'); ?>/images/chiptuning/racechip-module.png"/></a>
         <?php }  ?>
 
     </td>

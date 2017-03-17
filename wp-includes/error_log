@@ -1,1 +1,2 @@
 [06-Jun-2014 00:13:26 America/Denver] PHP Fatal error:  Call to undefined function add_action() in /home2/racechip/public_html/wp-includes/admin-bar.php on line 48
+[10-Dec-2015 23:41:46 America/Denver] PHP Fatal error:  Call to undefined function _deprecated_file() in /home2/racechip/public_html/wp-includes/rss-functions.php on line 8

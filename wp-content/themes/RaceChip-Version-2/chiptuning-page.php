@@ -24,8 +24,12 @@
       if (preg_match( "/-(\d{1,5})$/", $wp_query->query_vars[ 'car_name' ], $ok )
       ) {
 
+
+
+
         $submodel_id = (int) $ok[ 1 ];
         $racechips = get_racechips($submodel_id);
+
 
         $currency = ' €';
 
