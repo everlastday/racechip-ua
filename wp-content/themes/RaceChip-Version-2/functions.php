@@ -813,14 +813,11 @@ add_action('wp_enqueue_scripts', function(){
 
 
 function feed_dir_rewrite( $wp_rewrite ) {
-    $feed_rules = array(
-        '^chiptuning/([a-z0-9%-\+]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]',
-        '^chiptuning/([a-zA-Z0-9%-\+]+)/([a-zA-Z0-9-\+\%]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]',
-        '^chiptuning/([a-zA-Z0-9%-\+]+)/([a-zA-Z0-9-\+\%]+)/([a-zA-Z0-9-_\.\,\+\%()]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]',
-        '^responsecontrol/([a-z0-9%-\+]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]',
-        '^responsecontrol/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-%\+]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]',
-        '^responsecontrol/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-%\+]+)/([a-zA-Z0-9-_\.\,\+()%]+)/?$' => 'index.php?pagename=responsecontrol&response_id=$matches[1]&response_model=$matches[2]&response_name=$matches[3]',
-    );
+	$feed_rules = array(
+		'^chiptuning/([a-z0-9_\+-]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]',
+		'^chiptuning/([a-z0-9_\+-]+)/([a-zA-Z0-9_\+-]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]',
+		'^chiptuning/([a-z0-9_\+-]+)/([a-zA-Z0-9_\+-]+)/([a-z0-9_\+-]+)/?$' => 'index.php?pagename=chiptuning&car_id=$matches[1]&car_model=$matches[2]&car_name=$matches[3]',
+	);
 
     $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
     return $wp_rewrite->rules;

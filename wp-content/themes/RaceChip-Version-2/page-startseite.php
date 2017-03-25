@@ -31,14 +31,14 @@ get_header(); ?>
 
         <form id="rc-choice-form">
             <select id="mark" name="mark">
-                <option class="marks first" value="0">Bиберите марку...</option>
+                <option class="marks first" value="0">Bыберите марку...</option>
                 <?php get_vehicles_input() ?>
             </select>
             <select id="model" name="model" disabled>
-                <option class="marks first" value="0">Виберите модель...
+                <option class="marks first" value="0">Выберите модель...
             </select>
             <select id="modification" name="modification" disabled>
-                <option class="marks first" value="0">Виберите модификацию...
+                <option class="marks first" value="0">Выберите модификацию...
             </select>
             <input type="submit" class="butt" value="Узнать">
         </form>
@@ -66,19 +66,22 @@ get_header(); ?>
         </ul>
     </div>
     <div class="trenner2"></div>
+    <?php
+      $price = get_price_ua();
+    ?>
     <div style="background-color:#16181d; display: block; clear: both; margin: -12px 5px">
         <table style="margin-bottom: 5px;" class="main-page-images-table">
             <tbody>
             <tr>
                 <td width="240px">
                     <a href="/racechip-ultimate">RaceChip® Ultimate</a><br>
-                    <span style="font-size: 10px;">от 459 EUR</span></td>
+                    <span style="font-size: 10px;">от <?=$price[ 'ultimate' ] . ' ' . $price[ 'currency' ]  ?></span></td>
                 <td width="280px"><a href="/racechip-pro2">RaceChip® Pro2</a><br>
-                    <span style="font-size: 10px;">от 299 EUR</span></td>
+                    <span style="font-size: 10px;">от <?=$price[ 'pro2' ] . ' ' . $price[ 'currency' ] ?></span></td>
                 <td width="200px"><a href="/racechip">RaceChip®</a><br>
-                    <span style="font-size: 10px;">от 175 EUR</span></td>
+                    <span style="font-size: 10px;">от <?=$price[ 'one' ] . ' ' . $price[ 'currency' ] ?></span></td>
                 <td width="241px">Новинка: <a href="/responsecontrol">Response Control</a><br>
-                    <span style="font-size: 10px;">от 219 EUR</span></td>
+                    <span style="font-size: 10px;">от <?=$price[ 'pedal_tuning' ] . ' ' . $price[ 'currency' ] ?></span></td>
             </tr>
             </tbody>
         </table>
