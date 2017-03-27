@@ -46,7 +46,6 @@
         <span class="menuicon"></span>
 <span class="menutext">
 <img src="<?php echo get_template_directory_uri() ?>/images/flags/ua.png" /> Украина</span>
-
         <div style="clear:both;"></div>
       </a>
       <script>
@@ -66,7 +65,11 @@
       </script>
       <div class="languagemenu">
         <div class="languagemenuwrapper">
-          <a title="Deutsch" href="http://m.racechip.de">
+          <a title="Россия" href="http://m.racechip-ru.com">
+            <img alt="RU" src="<?php echo get_template_directory_uri() ?>/images/flags/ru.png">
+            Россия
+          </a>
+          <a title="Deutsch" href="http://racechip.de">
             <img alt="DE" src="<?php echo get_template_directory_uri() ?>/images/flags/de.png">
             Deutsch
           </a>
@@ -74,7 +77,7 @@
             <img alt="es_ES" src="<?php echo get_template_directory_uri() ?>/images/flags/es.png">
             Español
           </a>
-          <a title="Français" href="http://m.racechip.fr">
+          <a title="Français" href="http://www.racechip.fr">
             <img alt="fr_FR" src="<?php echo get_template_directory_uri() ?>/images/flags/fr.png">
             Français
           </a>
@@ -94,7 +97,7 @@
             <img alt="pt_PT" src="<?php echo get_template_directory_uri() ?>/images/flags/pt.png">
             Português
           </a>
-          <a title="Englisch" href="http://m.racechip.com">
+          <a title="Englisch" href="http://racechip.com">
             <img alt="us" src="<?php echo get_template_directory_uri() ?>/images/flags/us.png">
             English
           </a>

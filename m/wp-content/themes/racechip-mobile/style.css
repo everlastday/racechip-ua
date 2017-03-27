@@ -71,10 +71,17 @@ table th{font-weight:bold;padding:5px 5px 5px 0;text-align:left;width:155px;}
     border-radius: 5px;
     font-size:16px;
     font-weight:bold;
-
     letter-spacing:1px;
     padding:15px;
     cursor: pointer;
+    display: block;
+    width: 150px;
+    text-align: center;
+}
+#bluebuttonrightarrow:hover {
+    background-color: #FE5C1A;
+    text-decoration: none;
+    color: #F0F8FB;
 }
 .content-list{padding-left:15px;}
 .content-list li{padding:5px 0;}
@@ -302,6 +309,7 @@ footer #desktopansicht{float:right;height:30px;margin:10px 0 0;width:auto;}
     background: rgba(255, 255, 255, .2);
 }
 .backgroundstepwrapper .step-01 li a{font-size:100%;text-align:center;display:table-cell;height:60px;width:100px;color:#fff;text-decoration:none;vertical-align:middle;}
+.backgroundstepwrapper .step-01.bigger-width li a{width:300px;}
 .backgroundstepwrapper .step-01 li a:active{background: #006fd8; /* Fallback IE 6-8 */
     background: rgba(37, 149, 255, .7);}
 
@@ -332,7 +340,4 @@ footer #desktopansicht{float:right;height:30px;margin:10px 0 0;width:auto;}
 #respoMob  ol li{list-style-type:none;  padding:10px; background: rgba(50, 50, 50, 1); border-bottom: 2px solid #fe5c1a;}
 #respoMob  .cnt-img {   padding: 0 0 15px;}
 section#content .menu li.responsecontrol a .navigationicon{background:url('images/responsecontrol.png') no-repeat!important;height: 40px;width: 38px;}
-
-.order_form {
-
-}
+.window_popup form textarea, .form textarea {  height: 65px;  }
