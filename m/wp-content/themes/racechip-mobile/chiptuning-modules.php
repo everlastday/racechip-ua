@@ -109,7 +109,7 @@ $img = [
           <img class="chipimage" src="<?=get_template_directory_uri() ?>/images/<?=$img[$racechip[ 'type' ]] ?>" alt="RaceChip <?=ucfirst($racechip[ 'type' ])?> для <?=$full_car_name ?>" title="RaceChip <?=ucfirst($racechip[ 'type' ])?> для <?=$full_car_name ?>" /> <br/>
           <br/>
         </div>
-        <div class="cartlink"> <span class="price"><?=$price[$racechip[ 'type' ]] . ' ' . $currency ?></span><br/>
+        <div class="cartlink"> <span class="price"><?=$price[$racechip[ 'type' ]] . ' ' . $price['currency'] ?></span><br/>
           <span class="mehrwertsteuer">включая НДС</span> <br/>
           <br/>
             <div class="bluebuttonrightarrow online-message-btn" data-chip="RaceChip <?=ucfirst($racechip[ 'type' ])?>" data-model="<?=$full_car_name ?>">Заказать</div>

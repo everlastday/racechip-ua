@@ -9,8 +9,7 @@ if ( ! empty( $wp_query->query_vars[ 'car_id' ] ) && ! empty( $wp_query->query_v
 		if ( empty( $racechips ) ) {
 			abort_404();
 		}
-		$currency = ' руб.';
-		$price    = get_price_ru();
+		$price    = get_price_ua();
 		if ( ! empty( $racechips[ 0 ][ 'url' ] ) ) {
 			preg_match( "/(\d+)hp-(\d+)kw-(\d+)nm/", $racechips[ 0 ][ 'url' ], $output_array );
 			$base = [

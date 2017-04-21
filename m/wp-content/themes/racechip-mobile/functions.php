@@ -619,11 +619,15 @@ function get_chiptuning( $car_id = null, $car_name = null ) {
 
 
 function get_price_ua() {
-	$sql    = 'SELECT id, box_class, box_name, price FROM price_ua';
-	$result = DatabaseHandler::GetAll( $sql );
+	$sql = 'SELECT type, price_ua_euro as price FROM price';
+	$result = DatabaseHandler::GetAll($sql);
 
-	return $result;
+	foreach ($result as $v) $price[$v['type']] = $v['price'];
+	$price['currency'] = ' €';
+
+	return $price;
 }
+
 
 function get_price_ru()
 {
